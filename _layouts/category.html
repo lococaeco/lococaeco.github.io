@@ -1,34 +1,10 @@
 ---
-layout: default
+layout: archive
 ---
 
-<div class="category-container">
-  <h1>Categories</h1>
-  <div class="categories-grid">
-    {% assign categories = site.categories | sort %}
-    {% for category in categories %}
-      <div class="category-card">
-        <h2><a href="{{ site.baseurl }}/categories/#{{ category[0] | slugify }}">{{ category[0] }}</a></h2>
-        <p>{{ category[1].size }} posts</p>
-      </div>
-    {% endfor %}
-  </div>
-</div>
+{{ content }}
 
-<style>
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 1rem;
-}
-.category-card {
-  padding: 1rem;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  background: #fff;
-  transition: background 0.2s;
-}
-.category-card:hover {
-  background: #f7f7f7;
-}
-</style>
+{% assign entries_layout = page.entries_layout | default: 'list' %}
+<div class="entries-{{ entries_layout }}">
+  {% include posts-category.html taxonomy=page.taxonomy type=entries_layout %}
+</div>
