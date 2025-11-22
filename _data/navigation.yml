@@ -3,5 +3,3 @@ main:
     url: /
   - title: "전체 카테고리"
     url: /categories/
-  - title: "AI 연구"       # 메뉴 이름
-    url: /categories/#ai  # 클릭하면 categories 페이지의 'ai' 항목으로 이동
