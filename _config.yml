@@ -19,7 +19,7 @@ masthead_title           : # overrides the website title displayed in the masthe
 breadcrumbs              : true
 words_per_minute         : 200
 enable_copy_code_button  : true
-copyright                : # "copyright" name, defaults to site.title
+copyright                : # "lococaeco"
 copyright_url            : # "copyright" URL, defaults to site.url
 comments:
   provider               : false # "disqus", "utterances", "giscus" 등을 쓸 때 변경하세요.
@@ -103,7 +103,7 @@ author:
   avatar           : # "/assets/images/bio-photo.jpg"
   bio              : "아무도 없는 사각지대에서 여유를 느끼며 쉬기를 바라며"
   location         : "South Korea"
-  email            :
+  email            : "sangwoobang@unist.ac.kr"
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
