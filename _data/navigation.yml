@@ -1,5 +1,5 @@
 main:
   - title: "Home"
     url: /
-  - title: "전체 카테고리"
+  - title: "Category"
     url: /categories/
