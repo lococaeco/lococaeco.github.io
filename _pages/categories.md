@@ -5,4 +5,3 @@ permalink: /categories/  # 이 페이지가 웹에서 접근될 URL 경로 지�
 author_profile: true     # 페이지에 작성자 프로필 박스 표시 여부 (true = 보이게)
 sidebar:                 # 사이드바 설정 블록 시작
   nav: "categories"      # 좌측 사이드바에서 "categories" 메뉴 그룹 사용
----
