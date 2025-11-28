@@ -1,121 +1,18 @@
-# theme                  : "minimal-mistakes-jekyll"
-# remote_theme           : "mmistakes/minimal-mistakes"
-minimal_mistakes_skin    : "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+# basic info
+locale : "ko-KR"
+title : "lococaeco"
+name : "lococaeco"
+url : "https://lococaeco.github.io"
+repository : "https://github.com/lococaeco/lococaeco.github.io"
+timezone: Asia/Seoul
 
-# Site Settings
-locale                   : "ko-KR"
-rtl                      : # true, false (default)
-title                    : "사각지대"
-title_separator          : "-"
-subtitle                 : # site tagline that appears below site title in masthead
-name                     : "Lococaeco"
-description              : "아무도 없는 사각지대에서 여유를 느끼며 쉬기를 바라며"
-url                      : "https://lococaeco.github.io"
-baseurl                  : ""
-repository               : "lococaeco/lococaeco.github.io"
-teaser                   : "/assets/images/메타몽_500x300.png" 
-logo                     : # "/assets/images/88x88.png"
-masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
-breadcrumbs              : true
-words_per_minute         : 200
-enable_copy_code_button  : true
-copyright                : # "lococaeco"
-copyright_url            : # "copyright" URL, defaults to site.url
-comments:
-  provider               : false # "disqus", "utterances", "giscus" 등을 쓸 때 변경하세요.
-  disqus:
-    shortname            : 
-  discourse:
-    server               : 
-  facebook:
-    appid                :
-    num_posts            : # 5 (default)
-    colorscheme          : # "light" (default), "dark"
-  utterances:
-    theme                : # "github-light" (default), "github-dark"
-    issue_term           : # "pathname" (default)
-  giscus:
-    repo_id              : 
-    category_name        : 
-    category_id          : 
-    discussion_term      : # "pathname" (default), "url", "title", "og:title"
-    reactions_enabled    : # '1' for enabled (default), '0' for disabled
-    theme                : # "light" (default), "dark", "dark_dimmed", "transparent_dark", "preferred_color_scheme"
-    strict               : # 1 for enabled, 0 for disabled (default)
-    input_position       : # "top", "bottom"
-    emit_metadata        : # 1 for enabled, 0 for disabled (default)
-    lang                 : # "en" (default)
-    lazy                 : # true, false
-  staticman:
-    branch               : # "master"
-    endpoint             : # "https://{your Staticman v3 API}/v3/entry/github/"
-reCaptcha:
-  siteKey                :
-  secret                 :
-atom_feed:
-  path                   : # blank (default) uses feed.xml
-  hide                   : # true, false (default)
-search                   : true
-search_full_content      : true
-search_provider          : # lunr (default), algolia, google
-lunr:
-  search_within_pages    : true
-algolia:
-  application_id         : # YOUR_APPLICATION_ID
-  index_name             : # YOUR_INDEX_NAME
-  search_only_api_key    : # YOUR_SEARCH_ONLY_API_KEY
-  powered_by             : # true (default), false
-google:
-  search_engine_id       : # YOUR_SEARCH_ENGINE_ID
-  instant_search         : # false (default), true
-# SEO Related
-google_site_verification :
-bing_site_verification   :
-naver_site_verification  :
-yandex_site_verification :
-baidu_site_verification  :
-
-# Social Sharing
-twitter:
-  username               :
-facebook:
-  username               :
-  app_id                 :
-  publisher              :
-og_image                 : # Open Graph/Twitter default site image
-# For specifying social profiles
-social:
-  type                   : Person
-  name                   : Lococaeco
-  links: # An array of links to social media profiles
 
 # Analytics
-analytics:
-  provider               : false # "google-gtag" 등을 쓸 때 변경하세요.
-  google:
-    tracking_id          :
-    anonymize_ip         : # true, false (default)
-
-
-# Site Author
-author:
-  name             : "Lococaeco"
-  avatar           : # "/assets/images/bio-photo.jpg"
-  bio              : "아무도 없는 사각지대에서 여유를 느끼며 쉬기를 바라며"
-  location         : "South Korea"
-  email            : "sangwoobang@unist.ac.kr"
-  links:
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/lococaeco"
-
-# Site Footer
-footer:
-  links:
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/lococaeco"
-  since: "2025"
+# analytics:
+#   provider               : "google-gtag" # false (default), "google", "google-universal", "google-gtag", "custom"
+#   google:
+#     tracking_id          : "G-NDR0GLWHWZ"
+#     anonymize_ip         : # true, false (default)
 
 
 # Reading Files
@@ -141,15 +38,14 @@ exclude:
   - gulpfile.js
   - LICENSE
   - log
-  - minimal-mistakes-jekyll.gemspec
   - node_modules
   - package.json
   - package-lock.json
   - Rakefile
   - README
   - tmp
-  - /docs 
-  - /test 
+  - /docs # ignore Minimal Mistakes /docs
+  - /test # ignore Minimal Mistakes /test
 keep_files:
   - .git
   - .svn
@@ -160,99 +56,259 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 # Conversion
 markdown: kramdown
 highlighter: rouge
-lsi: false
-excerpt_separator: "\n\n"
-incremental: false
+# lsi: false
+# excerpt_separator: "\n\n"
+# incremental: false
 
 
 # Markdown Processing
 kramdown:
   input: GFM
-  hard_wrap: false
-  auto_ids: true
-  footnote_nr: 1
-  entity_output: as_char
-  toc_levels: 1..6
-  smart_quotes: lsquo,rsquo,ldquo,rdquo
-  enable_coderay: false
+  math_engine: mathjax
+  # hard_wrap: false
+  # auto_ids: true
+  # footnote_nr: 1
+  # entity_output: as_char
+  # toc_levels: 1..6
+  # smart_quotes: lsquo,rsquo,ldquo,rdquo
+  # enable_coderay: false
 
-
-# Sass/SCSS
-sass:
-  sass_dir: _sass
-  style: compressed 
-
-
-# Outputting
-permalink: /:categories/:title/
-timezone: Asia/Seoul
-
-
-# Pagination with jekyll-paginate
-paginate: 5 # amount of posts to show
-paginate_path: /page:num/
-
-# Pagination with jekyll-paginate-v2
-pagination:
-  # enabled: true
-  debug: false
-  collection: 'posts'
-  per_page: 10
-  permalink: '/page/:num/'
-  title: ':title - page :num'
-  limit: 0
-  sort_field: 'date'
-  sort_reverse: true
-  category: 'posts'
-  tag: ''
-  locale: ''
-  trail:
-    before: 2
-    after: 2
-
-
-# Plugins (previously gems:)
-plugins:
-  - jekyll-paginate
-  - jekyll-sitemap
-  - jekyll-gist
-  - jekyll-feed
-  - jekyll-include-cache
-
-# mimic GitHub Pages with --safe
-whitelist:
-  - jekyll-paginate
-  - jekyll-sitemap
-  - jekyll-gist
-  - jekyll-feed
-  - jekyll-include-cache
-
-
-# Archives
-category_archive:
-  type: liquid
-  path: /categories/
-tag_archive:
-  type: liquid
-  path: /tags/
-
-# HTML Compression
-compress_html:
-  clippings: all
-  ignore:
-    envs: development
-
-
-# Defaults
 defaults:
-  # _posts
-  - scope:
+  -
+    scope:
       path: ""
-      type: posts
     values:
-      layout: single
-      author_profile: true
-      read_time: true
+      layout: "post"
+      mathjax: true
+      toc: false
       comments: true
-      share: true
-      related: true
+
+  -
+    scope:
+      path: "_pages/categories/category_recentposts.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-recent_posts.png"
+
+  -
+    scope:
+      path: "_pages/categories/category_robotics.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-robotics-autonomous_vehicle.png"
+
+  -
+    scope:
+      path: "_posts/robotics/autonomous_vehicle/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-robotics-autonomous_vehicle.png"
+  -
+    scope:
+      path: "_pages/categories/category_robotics_autonomousvehicle.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-robotics-autonomous_vehicle.png"
+
+  -
+    scope:
+      path: "_posts/robotics/perception/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-robotics-perception.png"
+  -
+    scope:
+      path: "_pages/categories/category_robotics_perception.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-robotics-perception.png"
+
+  -
+    scope:
+      path: "_posts/robotics/ros/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-robotics-ros.png"
+  -
+    scope:
+      path: "_pages/categories/category_robotics_ros.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-robotics-ros.png"
+
+  -
+    scope:
+      path: "_posts/robotics/control_and_engineering/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-robotics-engineering.png"
+  -
+    scope:
+      path: "_pages/categories/category_robotics_controlandengineering.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-robotics-engineering.png"
+
+  -
+    scope:
+      path: "_pages/categories/category_ai.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-ai-computer_vision.png"
+
+  -
+    scope:
+      path: "_posts/ai/computer_vision/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-ai-computer_vision.png"
+  -
+    scope:
+      path: "_pages/categories/category_ai_computervision.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-ai-computer_vision.png"
+
+  -
+    scope:
+      path: "_posts/ai/deep_learning/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-ai-deep_learning.png"
+  -
+    scope:
+      path: "_pages/categories/category_ai_deeplearning.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-ai-deep_learning.png"
+
+  -
+    scope:
+      path: "_posts/ai/machine_learning/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-ai-machine_learning.png"
+  -
+    scope:
+      path: "_pages/categories/category_ai_machinelearning.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-ai-machine_learning.png"
+
+  -
+    scope:
+      path: "_pages/categories/category_programming.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-programming-python.png"
+
+  -
+    scope:
+      path: "_posts/programming/algorithm/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-programming-algorithm.png"
+  -
+    scope:
+      path: "_pages/categories/category_programming_algorithm.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-programming-algorithm.png"
+
+  -
+    scope:
+      path: "_posts/programming/python/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-programming-python.png"
+  -
+    scope:
+      path: "_pages/categories/category_programming_python.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-programming-python.png"
+
+  -
+    scope:
+      path: "_posts/programming/cpp/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-programming-cpp.png"
+  -
+    scope:
+      path: "_pages/categories/category_programming_cpp.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-programming-cpp.png"
+
+  -
+    scope:
+      path: "_posts/programming/javascript/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-programming-javascript.png"
+  -
+    scope:
+      path: "_pages/categories/category_programming_javascript.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-programming-javascript.png"
+
+  -
+    scope:
+      path: "_posts/programming/others/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-programming-others.png"
+  -
+    scope:
+      path: "_pages/categories/category_programming_others.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-programming-others.png"
+
+  -
+    scope:
+      path: "_pages/categories/category_dev.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-dev-git.png"
+
+  -
+    scope:
+      path: "_posts/dev/git/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-dev-git.png"
+  -
+    scope:
+      path: "_pages/categories/category_dev_git.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-dev-git.png"
+
+  -
+    scope:
+      path: "_posts/dev/docker/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-dev-docker.png"
+  -
+    scope:
+      path: "_pages/categories/category_dev_docker.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-dev-docker.png"
+
+  -
+    scope:
+      path: "_pages/categories/category_cs.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-cs-linux.png"
+
+  -
+    scope:
+      path: "_posts/cs/linux/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-cs-linux.png"
+  -
+    scope:
+      path: "_pages/categories/category_cs_linux.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-cs-linux.png"
+
+  -
+    scope:
+      path: "_pages/categories/category_math.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-math-linear_algebra.png"
+
+
+  -
+    scope:
+      path: "_posts/math/linear_algebra/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-math-linear_algebra.png"
+  -
+    scope:
+      path: "_pages/categories/category_math_linearalgebra.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-math-linear_algebra.png"
+
+  -
+    scope:
+      path: "_posts/math/math_for_ml/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-math-math_for_ml.png"
+  -
+    scope:
+      path: "_pages/categories/category_math_math4ml.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-math-math_for_ml.png"

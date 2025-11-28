@@ -1,26 +1,74 @@
-{% unless site.atom_feed.hide %}
-  {% assign show_atom = true %}
-{% endunless %}
-{% if site.footer.links or show_atom %}
-<div class="page__footer-follow">
-  <ul class="social-icons">
-    {% if site.data.ui-text[site.locale].follow_label %}
-      <li><strong>{{ site.data.ui-text[site.locale].follow_label }}</strong></li>
-    {% endif %}
+<div id="footer">
+    <div class="footer-main">
+        <div class="footer-about">
+            <div class="footer-name">
+                <span>lococaeco</span>
+                <!-- <span>lococaeco</span> -->
+            </div>
 
-    {% if site.footer.links %}
-      {% for link in site.footer.links %}
-        {% if link.label and link.url %}
-          <li><a href="{{ link.url }}" rel="nofollow noopener noreferrer"><i class="{{ link.icon | default: 'fas fa-link' }}" aria-hidden="true"></i> {{ link.label | escape_once | strip }}</a></li>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
+            <p class="footer-greeting">
+                .
+            </p>
 
-    {% unless site.atom_feed.hide %}
-      <li><a href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ '/feed.xml' | relative_url }}{% endif %}"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].feed_label | default: "Feed" }}</a></li>
-    {% endunless %}
-  </ul>
+            <div class="footer-contacts">
+                <a class="contact" href="https://github.com/lococaeco" >
+                    <span class="contact-icon"><i class="fa-brands fa-github"></i></span>
+                    <span class="contact-title">GitHub</span>
+                </a>
+    
+                <a class="contact" href="mailto:sangwoobang@unist.ac.kr">
+                    <span class="contact-icon"><i class="fa-regular fa-envelope"></i></span>
+                    <span class="contact-title">e-mail</span>
+                </a>
+            </div>
+        </div>
+<!-- 
+        <div class="footer-categoires">
+            <a class="go-recent" href="/category/recent_posts">
+                <span>Categories</span>
+                <button class="go-recent-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
+                </button>
+            </a>
+
+            <div class="categories-wrapper">
+                <div class="lv1-categories">
+                    {% assign categories = site.data.categories.categories %}
+                    {% for lv1 in categories %}
+                        <div class="lv1-category">
+                            <div class="lv1-title-wrap">
+                                <div class="lv1-title">
+                                    <a href="{{ lv1.url | relative_url }}" class="lv1-title-link">{{ lv1.lv1_category }}</a>
+                                </div>
+                            </div>
+                            
+                            <ul class="lv2-categories">
+                                {% for lv2 in lv1.lv2 %}
+                                    <li class="lv2-category">
+                                        <div class="lv2-title-wrap">
+                                            <div class="lv2-title">
+                                                <a href="{{ lv2.url | relative_url }}" class="lv2-title-link">{{ lv2.lv2_category }}</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div> -->
+
+        <div class="footer-pages">
+            <a href="/about">About</a>
+            <!-- <a href="/series">Series</a> -->
+            <!-- <a href="/projects">Projects</a> -->
+            <a href="/notice">Notice</a>
+        </div>
+    
+    </div>
+    
+    <div class="copyright">
+        <span>copyright by winterbloooom</span>
+    </div>
 </div>
-{% endif %}
-
-<div class="page__footer-copyright">&copy; {% assign site_time = site.time | date: '%Y' %}{% if site.footer.since and site_time != site.footer.since %}{{ site.footer.since }} - {% endif %}{{ site_time }} <a href="{{ site.copyright_url | default: site.url }}">{{ site.copyright | default: site.title | escape_once | strip }}</a>. {{ site.data.ui-text[site.locale].powered_by | default: "Powered by" }} <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>

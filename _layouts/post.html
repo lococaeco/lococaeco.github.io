@@ -1,0 +1,74 @@
+---
+layout: default
+---
+
+<div class="layout-default">
+
+    <!-- Post title -->
+    <div id="post-title">
+
+        <div class="title-container">
+            
+            <!-- title-wrap -->
+            <div class="title-wrap">
+                <!-- tag-wrap -->
+                <div class="title-tag-wrap">
+                    {% for tag in page.tags %}
+                        <div class="tag-single">{{ tag }}</div>
+                    {% endfor %}
+                </div>
+                
+                <!-- title-text -->
+                <div class="title-text">{{ page.title }}</div>
+    
+                <!-- date -->
+                <div class="title-date">{{ page.date | date: "%Y. %m. %d" }}</div>
+
+            </div>
+
+            {% if page.teaser %}
+                <div class="post-teaser-wrap">
+                    <img class="post-teaser" src="{{ page.teaser }}">
+                </div>
+            {% endif %}
+            
+        </div>
+        <div class="title-bottom"></div>
+        
+    </div>
+
+    <!-- 본문 -->
+    <div id="post-content" class="content-default">
+        <div class="content-wrap">
+            {{ content }}
+
+            <div id="disqus_thread"></div>
+            <script>
+                /**
+                *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+
+                var disqus_config = function () {
+                this.page.url = "https://winterbloooom.github.io{{ page.url }}";  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = "{{ page.id }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                };
+
+                (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://winterbloooom.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+    </div>
+
+    <!-- 목차 -->
+    {% if page.toc %}
+        <div id="toc">
+            {% include toc.html html=content sanitize=true h_min=1 h_max=2 %}
+        </div>
+    {% endif %}
+
+</div>

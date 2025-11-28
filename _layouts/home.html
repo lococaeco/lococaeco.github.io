@@ -1,20 +1,95 @@
 ---
-layout: archive
+layout: default
+title: Home
 ---
 
-{{ content }}
+<div class="layout-default">
+    <div id="home-content" class="content-default">
+        <div class="content-wrap">
 
-<h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].recent_posts | default: "Recent Posts" }}</h3>
+            <!-- featured posts -->
+            <div class="list-basic">
+                <div class="list-title">Featured Posts</div>
 
-{% if paginator %}
-  {% assign posts = paginator.posts %}
-{% else %}
-  {% assign posts = site.posts %}
-{% endif %}
+                <div id="list-featured">
+                    {% for post in site.posts %} 
+                        {% if post.feature == true %}
+                            <a href="{{ post.url }}" id="featured-single" class="post-link"
+                            style="background: linear-gradient(0deg, rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url({{ post.teaser | relative_url}}); background-position:center center; background-size: cover">
+                                <div class="list-element-text">
+                                    <div class="list-element-category">{{ post.categories | join: ' / ' }}</div>
+                                    <div class="list-element-title">{{ post.title }}</div>
+                                    <div class="list-element-date">{{ post.date | date: "%Y. %m. %d" }}</div>
+                                    <div class="list-element-excerpt">{{ post.excerpt | default: "" }}</div>
+                                </div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
 
-{% assign entries_layout = page.entries_layout | default: 'list' %}
-<div class="entries-{{ entries_layout }}">
-  {% include documents-collection.html entries=posts type=entries_layout %}
+            <!-- categories list -->
+            <div class="list-basic">
+                <div class="list-title">Categories</div>
+
+                <div class="list-elements" id="list-categories">
+                    {% assign categories = site.data.categories.categories %}
+                    {% for lv1 in categories %}
+                        <a href="{{ lv1.url | relative_url }}" id="category-single" class="post-link">
+                            <div class="category-icon"><i class="{{ lv1.icon }}"></i></div>
+                            <div class="category-title">{{ lv1.lv1_category }}</div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- recent posts -->
+            <div class="list-basic">
+                <div class="list-title">Recent Posts</div>
+
+                <div id="list-default">
+                    {% for post in site.posts limit : 4 %} 
+                        {% if forloop.first %}
+                            {% include archive_single_teaser.html id="default-single-first"%}
+                        {% else %}
+                            {% include archive_single_teaser.html id="default-single-other"%}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- AI -->
+            <div class="list-basic">
+                <div class="list-title">AI</div>
+
+                <div id="list-default">
+                    {% assign posts = site.categories.AI %}
+                    {% for post in posts limit : 4 %} 
+                        {% if forloop.first %}
+                            {% include archive_single_teaser.html id="default-single-first"%}
+                        {% else %}
+                            {% include archive_single_teaser.html id="default-single-other"%}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Robotics -->
+            <div class="list-basic">
+                <div class="list-title">Robotics</div>
+
+                <div id="list-default">                   
+                    {% assign posts = site.categories.Robotics %}
+                    {% for post in posts limit : 4 %} 
+                        {% if forloop.first %}
+                            {% include archive_single_teaser.html id="default-single-first"%}
+                        {% else %}
+                            {% include archive_single_teaser.html id="default-single-other"%}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+    
+        </div>
+    </div>
 </div>
-
-{% include paginator.html %}
