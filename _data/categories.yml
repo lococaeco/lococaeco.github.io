@@ -4,7 +4,7 @@ categories:
     icon: fa-solid fa-brain
     lv2:
         - lv2_category: "Reinforcement Learning"
-          url: /category/ai/reinforcementlearning
+          url: /category/ai/reinforcement_learning
   - lv1_category: "Dev"
     url: /category/dev/
     icon: fa-solid fa-laptop

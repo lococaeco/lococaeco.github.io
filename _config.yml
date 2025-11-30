@@ -180,6 +180,17 @@ defaults:
 
   -
     scope:
+      path: "_posts/ai/reinforcement_learning/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-ai-reinforcement_learning.png"
+  -
+    scope:
+      path: "_pages/categories/category_ai_reinforcementlearning.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-ai-reinforcement_learning.png"
+
+  -
+    scope:
       path: "_pages/categories/category_programming.html"
     values:
       title_bg: "/assets/images/lv2_bg/bg-programming-python.png"
