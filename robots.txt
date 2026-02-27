@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://lococaeco.github.io/sitemap.xml
