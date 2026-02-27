@@ -2,17 +2,10 @@
 locale : "ko-KR"
 title : "lococaeco"
 name : "lococaeco"
+description : "LLM & Reinforcement Learning 연구 블로그"
 url : "https://lococaeco.github.io"
 repository : "https://github.com/lococaeco/lococaeco.github.io"
 timezone: Asia/Seoul
-
-
-# Analytics
-# analytics:
-#   provider               : "google-gtag" # false (default), "google", "google-universal", "google-gtag", "custom"
-#   google:
-#     tracking_id          : "G-NDR0GLWHWZ"
-#     anonymize_ip         : # true, false (default)
 
 
 # Reading Files
@@ -44,8 +37,8 @@ exclude:
   - Rakefile
   - README
   - tmp
-  - /docs # ignore Minimal Mistakes /docs
-  - /test # ignore Minimal Mistakes /test
+  - /docs
+  - /test
 keep_files:
   - .git
   - .svn
@@ -56,24 +49,15 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 # Conversion
 markdown: kramdown
 highlighter: rouge
-# lsi: false
-# excerpt_separator: "\n\n"
-# incremental: false
 
 
 # Markdown Processing
 kramdown:
   input: GFM
   math_engine: mathjax
-  # hard_wrap: false
-  # auto_ids: true
-  # footnote_nr: 1
-  # entity_output: as_char
-  # toc_levels: 1..6
-  # smart_quotes: lsquo,rsquo,ldquo,rdquo
-  # enable_coderay: false
 
 defaults:
+  # Global defaults
   -
     scope:
       path: ""
@@ -83,101 +67,26 @@ defaults:
       toc: false
       comments: true
 
-  -
-    scope:
-      path: "_pages/categories/category_recentposts.html"
-    values:
-      title_bg: "/assets/images/lv2_bg/bg-recent_posts.png"
-
-  -
-    scope:
-      path: "_pages/categories/category_robotics.html"
-    values:
-      title_bg: "/assets/images/lv2_bg/bg-robotics-autonomous_vehicle.png"
-
-  -
-    scope:
-      path: "_posts/robotics/autonomous_vehicle/*"
-    values:
-      teaser: "/assets/images/teaser/teaser-robotics-autonomous_vehicle.png"
-  -
-    scope:
-      path: "_pages/categories/category_robotics_autonomousvehicle.html"
-    values:
-      title_bg: "/assets/images/lv2_bg/bg-robotics-autonomous_vehicle.png"
-
-  -
-    scope:
-      path: "_posts/robotics/perception/*"
-    values:
-      teaser: "/assets/images/teaser/teaser-robotics-perception.png"
-  -
-    scope:
-      path: "_pages/categories/category_robotics_perception.html"
-    values:
-      title_bg: "/assets/images/lv2_bg/bg-robotics-perception.png"
-
-  -
-    scope:
-      path: "_posts/robotics/ros/*"
-    values:
-      teaser: "/assets/images/teaser/teaser-robotics-ros.png"
-  -
-    scope:
-      path: "_pages/categories/category_robotics_ros.html"
-    values:
-      title_bg: "/assets/images/lv2_bg/bg-robotics-ros.png"
-
-  -
-    scope:
-      path: "_posts/robotics/control_and_engineering/*"
-    values:
-      teaser: "/assets/images/teaser/teaser-robotics-engineering.png"
-  -
-    scope:
-      path: "_pages/categories/category_robotics_controlandengineering.html"
-    values:
-      title_bg: "/assets/images/lv2_bg/bg-robotics-engineering.png"
-
+  # === AI ===
   -
     scope:
       path: "_pages/categories/category_ai.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-ai-computer_vision.png"
+      title_bg: "/assets/images/lv2_bg/bg-ai-deep_learning.png"
 
+  # AI / LLM
   -
     scope:
-      path: "_posts/ai/computer_vision/*"
-    values:
-      teaser: "/assets/images/teaser/teaser-ai-computer_vision.png"
-  -
-    scope:
-      path: "_pages/categories/category_ai_computervision.html"
-    values:
-      title_bg: "/assets/images/lv2_bg/bg-ai-computer_vision.png"
-
-  -
-    scope:
-      path: "_posts/ai/deep_learning/*"
+      path: "_posts/ai/llm/*"
     values:
       teaser: "/assets/images/teaser/teaser-ai-deep_learning.png"
   -
     scope:
-      path: "_pages/categories/category_ai_deeplearning.html"
+      path: "_pages/categories/category_ai_llm.html"
     values:
       title_bg: "/assets/images/lv2_bg/bg-ai-deep_learning.png"
 
-  -
-    scope:
-      path: "_posts/ai/machine_learning/*"
-    values:
-      teaser: "/assets/images/teaser/teaser-ai-machine_learning.png"
-  -
-    scope:
-      path: "_pages/categories/category_ai_machinelearning.html"
-    values:
-      title_bg: "/assets/images/lv2_bg/bg-ai-machine_learning.png"
-
+  # AI / Reinforcement Learning
   -
     scope:
       path: "_posts/ai/reinforcement_learning/*"
@@ -189,73 +98,50 @@ defaults:
     values:
       title_bg: "/assets/images/lv2_bg/bg-ai-reinforcement_learning.png"
 
+  # AI / Deep Learning
   -
     scope:
-      path: "_pages/categories/category_programming.html"
+      path: "_posts/ai/deep_learning/*"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-programming-python.png"
+      teaser: "/assets/images/teaser/teaser-ai-deep_learning.png"
+  -
+    scope:
+      path: "_pages/categories/category_ai_deeplearning.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-ai-deep_learning.png"
 
+  # AI / Paper Review
   -
     scope:
-      path: "_posts/programming/algorithm/*"
+      path: "_posts/ai/paper_review/*"
     values:
-      teaser: "/assets/images/teaser/teaser-programming-algorithm.png"
+      teaser: "/assets/images/teaser/teaser-ai-deep_learning.png"
   -
     scope:
-      path: "_pages/categories/category_programming_algorithm.html"
+      path: "_pages/categories/category_ai_paperreview.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-programming-algorithm.png"
+      title_bg: "/assets/images/lv2_bg/bg-ai-deep_learning.png"
 
-  -
-    scope:
-      path: "_posts/programming/python/*"
-    values:
-      teaser: "/assets/images/teaser/teaser-programming-python.png"
-  -
-    scope:
-      path: "_pages/categories/category_programming_python.html"
-    values:
-      title_bg: "/assets/images/lv2_bg/bg-programming-python.png"
-
-  -
-    scope:
-      path: "_posts/programming/cpp/*"
-    values:
-      teaser: "/assets/images/teaser/teaser-programming-cpp.png"
-  -
-    scope:
-      path: "_pages/categories/category_programming_cpp.html"
-    values:
-      title_bg: "/assets/images/lv2_bg/bg-programming-cpp.png"
-
-  -
-    scope:
-      path: "_posts/programming/javascript/*"
-    values:
-      teaser: "/assets/images/teaser/teaser-programming-javascript.png"
-  -
-    scope:
-      path: "_pages/categories/category_programming_javascript.html"
-    values:
-      title_bg: "/assets/images/lv2_bg/bg-programming-javascript.png"
-
-  -
-    scope:
-      path: "_posts/programming/others/*"
-    values:
-      teaser: "/assets/images/teaser/teaser-programming-others.png"
-  -
-    scope:
-      path: "_pages/categories/category_programming_others.html"
-    values:
-      title_bg: "/assets/images/lv2_bg/bg-programming-others.png"
-
+  # === Dev ===
   -
     scope:
       path: "_pages/categories/category_dev.html"
     values:
       title_bg: "/assets/images/lv2_bg/bg-dev-git.png"
 
+  # Dev / Python
+  -
+    scope:
+      path: "_posts/dev/python/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-dev-git.png"
+  -
+    scope:
+      path: "_pages/categories/category_dev_python.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-dev-git.png"
+
+  # Dev / Git
   -
     scope:
       path: "_posts/dev/git/*"
@@ -267,6 +153,7 @@ defaults:
     values:
       title_bg: "/assets/images/lv2_bg/bg-dev-git.png"
 
+  # Dev / Docker
   -
     scope:
       path: "_posts/dev/docker/*"
@@ -278,30 +165,26 @@ defaults:
     values:
       title_bg: "/assets/images/lv2_bg/bg-dev-docker.png"
 
+  # Dev / Linux
   -
     scope:
-      path: "_pages/categories/category_cs.html"
+      path: "_posts/dev/linux/*"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-cs-linux.png"
+      teaser: "/assets/images/teaser/teaser-dev-git.png"
+  -
+    scope:
+      path: "_pages/categories/category_dev_linux.html"
+    values:
+      title_bg: "/assets/images/lv2_bg/bg-dev-git.png"
 
-  -
-    scope:
-      path: "_posts/cs/linux/*"
-    values:
-      teaser: "/assets/images/teaser/teaser-cs-linux.png"
-  -
-    scope:
-      path: "_pages/categories/category_cs_linux.html"
-    values:
-      title_bg: "/assets/images/lv2_bg/bg-cs-linux.png"
-
+  # === Math ===
   -
     scope:
       path: "_pages/categories/category_math.html"
     values:
       title_bg: "/assets/images/lv2_bg/bg-math-linear_algebra.png"
 
-
+  # Math / Linear Algebra
   -
     scope:
       path: "_posts/math/linear_algebra/*"
@@ -313,13 +196,14 @@ defaults:
     values:
       title_bg: "/assets/images/lv2_bg/bg-math-linear_algebra.png"
 
+  # Math / Probability & Statistics
   -
     scope:
-      path: "_posts/math/math_for_ml/*"
+      path: "_posts/math/probability_statistics/*"
     values:
-      teaser: "/assets/images/teaser/teaser-math-math_for_ml.png"
+      teaser: "/assets/images/teaser/teaser-math-linear_algebra.png"
   -
     scope:
-      path: "_pages/categories/category_math_math4ml.html"
+      path: "_pages/categories/category_math_probabilitystatistics.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-math-math_for_ml.png"
+      title_bg: "/assets/images/lv2_bg/bg-math-linear_algebra.png"
