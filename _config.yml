@@ -72,19 +72,19 @@ defaults:
     scope:
       path: "_pages/categories/category_ai.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-ai-deep_learning.png"
+      title_bg: "/assets/images/lv2_bg/bg-ai-machine_learning.png"
 
   # AI / LLM
   -
     scope:
       path: "_posts/ai/llm/*"
     values:
-      teaser: "/assets/images/teaser/teaser-ai-deep_learning.png"
+      teaser: "/assets/images/teaser/teaser-ai-machine_learning.png"
   -
     scope:
       path: "_pages/categories/category_ai_llm.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-ai-deep_learning.png"
+      title_bg: "/assets/images/lv2_bg/bg-ai-machine_learning.png"
 
   # AI / Reinforcement Learning
   -
@@ -103,24 +103,24 @@ defaults:
     scope:
       path: "_posts/ai/deep_learning/*"
     values:
-      teaser: "/assets/images/teaser/teaser-ai-deep_learning.png"
+      teaser: "/assets/images/teaser/teaser-ai-machine_learning.png"
   -
     scope:
       path: "_pages/categories/category_ai_deeplearning.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-ai-deep_learning.png"
+      title_bg: "/assets/images/lv2_bg/bg-ai-machine_learning.png"
 
   # AI / Paper Review
   -
     scope:
       path: "_posts/ai/paper_review/*"
     values:
-      teaser: "/assets/images/teaser/teaser-ai-deep_learning.png"
+      teaser: "/assets/images/teaser/teaser-ai-machine_learning.png"
   -
     scope:
       path: "_pages/categories/category_ai_paperreview.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-ai-deep_learning.png"
+      title_bg: "/assets/images/lv2_bg/bg-ai-machine_learning.png"
 
   # === Dev ===
   -

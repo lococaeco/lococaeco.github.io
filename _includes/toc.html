@@ -1,0 +1,35 @@
+{% capture tocworks %}
+  {% assign minHeader = include.h_min | default: 1 %}
+  {% assign maxHeader = include.h_max | default: 3 %}
+  {% assign html = include.html %}
+  {% assign sanitize = include.sanitize %}
+
+  {% assign nodes = html | split: '<h' %}
+  <ul class="toc-list">
+  {% for node in nodes %}
+    {% if node == "" %}
+      {% continue %}
+    {% endif %}
+    {% assign headerLevel = node | replace: '"', '' | slice: 0, 1 | times: 1 %}
+    {% if headerLevel < minHeader or headerLevel > maxHeader %}
+      {% continue %}
+    {% endif %}
+    {% if node contains 'id="' %}
+      {% assign _idPart = node | split: 'id="' %}
+      {% if _idPart.size > 1 %}
+        {% assign _idRaw = _idPart[1] | split: '"' | first %}
+        {% assign _titlePart = node | split: '>' %}
+        {% if _titlePart.size > 1 %}
+          {% assign _title = _titlePart[1] | split: '</h' | first | strip_html | strip %}
+          {% if _title != "" %}
+            <li class="toc-entry toc-h{{ headerLevel }}">
+              <a href="#{{ _idRaw }}">{{ _title }}</a>
+            </li>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+  </ul>
+{% endcapture %}
+{{ tocworks }}
