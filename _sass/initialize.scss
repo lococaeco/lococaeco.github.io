@@ -92,9 +92,7 @@ body {
     }
     
     &::-webkit-scrollbar-thumb {
-        // height: 10%; /* 스크롤바의 길이 */
-        background: $grey-600; /* 스크롤바의 색상 */
-        // border-radius: 10px;
+        background: $grey-600;
     }
     
     &::-webkit-scrollbar-track {
@@ -274,8 +272,6 @@ hr {
     margin: 1rem 0 1.5rem 0;
 
     .notice-text {
-        // font-size: 0.9rem;
-        // line-height: 1.3rem;
         border-left: 3px solid $main-color;
         padding: 0.5rem;
         padding-left: 1rem;
@@ -321,11 +317,8 @@ hr {
 @import "_text_style";
 @import "table";
 @import "page_404";
-@import "page_notice";
 @import "page_about";
 @import "page_home";
-@import "page_projects";
-@import "page_series";
 
 @import "items/content";
 @import "items/footer";

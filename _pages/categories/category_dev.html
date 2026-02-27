@@ -9,7 +9,7 @@ permalink: /category/dev/
         {% if lv1.lv1_category == 'Dev' %}
             {% for lv2 in lv1.lv2 %}
                 <div id="list-element-category" class="list-element">
-                    <a href="{{ lv2.url | relative_url | relative_url }}" class="list-element-url">
+                    <a href="{{ lv2.url | relative_url }}" class="list-element-url">
                         <div class="category-name">{{ lv2.lv2_category }}</div>
                     </a>
                 </div>

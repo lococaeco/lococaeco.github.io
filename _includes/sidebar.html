@@ -55,19 +55,3 @@
         </ul>
     </div>
 </div>
-
-<script>
-    // sidebar open/close
-    var sidebar = document.querySelectorAll('.expand-btn');
-
-    // sub-category show
-    var treeNodes = document.querySelectorAll('.expand-btn');
-    treeNodes.forEach(t => t.addEventListener('click', function (e) {
-        var lv2 = e.currentTarget.parentElement.parentElement.nextElementSibling;
-        lv2.classList.toggle('expand');
-        var lv1 = e.currentTarget;
-        console.log(lv1);
-        lv1.classList.toggle('expand');
-        
-    }));
-</script>

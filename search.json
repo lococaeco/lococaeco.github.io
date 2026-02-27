@@ -1,0 +1,16 @@
+---
+layout: null
+---
+[
+  {% for post in site.posts %}
+    {
+      "title"      : {{ post.title | jsonify }},
+      "categories" : "{{ post.categories | join: ', ' }}",
+      "tags"       : "{{ post.tags | join: ', ' }}",
+      "url"        : "{{ post.url | relative_url }}",
+      "date"       : "{{ post.date | date: '%Y.%m.%d' }}",
+      "excerpt"    : {{ post.excerpt | strip_html | truncatewords: 30 | jsonify }},
+      "teaser"     : "{{ post.header.teaser | default: '/assets/images/teaser/default.png' }}"
+    }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]

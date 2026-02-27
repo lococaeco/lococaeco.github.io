@@ -1,8 +1,10 @@
 <!doctype html>
-<html>
+<html lang="ko">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | truncatewords: 30 }}">
+        <meta name="author" content="lococaeco">
 
         {% if page.title %}
             <title>{{ page.title }} | lococaeco</title>
@@ -10,7 +12,11 @@
             <title>lococaeco</title>
         {% endif %}
 
-        
+        <!-- Open Graph -->
+        <meta property="og:title" content="{{ page.title | default: site.title }}">
+        <meta property="og:description" content="{{ page.excerpt | default: site.description | strip_html | truncatewords: 30 }}">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ page.url | absolute_url }}">
 
         <!-- custom css -->
         <link 
@@ -39,7 +45,6 @@
         </script>
 
         <!-- mathjax -->
-        {% comment %}{% include mathjax_support.html %}{% endcomment %}
         <script>
             MathJax = {
               tex: {
@@ -48,14 +53,11 @@
             };
         </script>
         <script id="MathJax-script" async
-            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
         </script>
 
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
         <!-- favicon -->
-        <!-- <link rel="shortcut icon" href="/assets/images/favicon/favicon.ico">
+        <link rel="shortcut icon" href="/assets/images/favicon/favicon.ico">
         <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/favicon/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="/assets/images/favicon/apple-icon-60x60.png">
         <link rel="apple-touch-icon" sizes="72x72" href="/assets/images/favicon/apple-icon-72x72.png">
@@ -65,14 +67,14 @@
         <link rel="apple-touch-icon" sizes="144x144" href="/assets/images/favicon/apple-icon-144x144.png">
         <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicon/apple-icon-152x152.png">
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-icon-180x180.png">
-        <link rel="icon" type="image/png" sizes="192x192"  href="/assets/images/favicon/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/favicon/android-icon-192x192.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="96x96" href="/assets/images/favicon/favicon-96x96.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
         <link rel="manifest" href="/assets/images/favicon/manifest.json">
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="/assets/images/favicon/ms-icon-144x144.png">
-        <meta name="theme-color" content="#ffffff"> -->
+        <meta name="theme-color" content="#ffffff">
     </head>    
     
     <!-- actual page -->
@@ -103,17 +105,10 @@
             </span>
         </a>
 
-        <!-- Loading 화면 코드 시작 -->
-        <script 
-            src="https://code.jquery.com/jquery-1.8.0.js"
-            integrity="sha256-00Fh8tkPAe+EmVaHFpD+HovxWk7b97qwqVi7nLvjdgs="
-            crossorigin="anonymous">
-        </script>
-        <script type="text/javascript">
-            $(window).on('load', function () {
-                $("#load").hide();
-            });
-        </script>
+        <!-- main script -->
+        <script src="/assets/js/main.js"></script>
+
+        <!-- Loading -->
         <style type="text/css">
             #load {
                 width: 100%;

@@ -37,7 +37,6 @@
     color: $grey-400 !important;
     font-size: small;
     margin-bottom: 1.4rem;
-    // line-height: 1rem;
 }
 
 .footer-contacts {
@@ -81,99 +80,6 @@
     }
 }
 
-
-.footer-categories {
-    grid-column: 2 / 3;
-}
-
-.go-recent span {
-    font-weight: 700;
-}
-
-.go-recent-btn {
-    margin-left: 2rem;
-    outline: none;
-    background-color: transparent;
-    border: 0;
-    cursor: pointer;
-    transition: 0.2s;
-    transform: rotate(-90deg);
-    margin-bottom: 1rem;
-
-    svg {
-        height: 0.9rem;
-        width: 0.9rem;
-        fill: white;
-    }
-}
-
-.categories-wrapper {
-    padding-left: 0.5rem;
-
-    .lv1-categories {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .lv1-category {
-        margin-right: 0.5rem;
-        margin-bottom: 1rem;
-        flex: 1 1 40%;
-
-        .lv1-title-wrap {
-            .lv1-title {
-                display: flex;
-                flex-direction: row;
-                margin-bottom: 0.3rem;
-                
-                &:hover {
-                    .lv1-title-link {
-                        border-bottom: 1px solid white;
-                    }
-                }
-
-                .lv1-title-link {
-                    font-size: 0.8rem;
-                    border-bottom: 1px solid transparent;
-                    font-weight: 700;
-                }
-            }
-        }
-    }
-
-    .lv2-categories {
-        list-style: none;
-    }
-
-    .lv2-category {
-        padding-left: 1.2rem;
-
-        .lv2-title-wrap {
-            .lv2-title {
-                display: flex;
-                flex-direction: row;
-                border-bottom: 1px solid transparent;
-                margin-bottom: 0.2rem;
-
-                &:hover {
-                    .lv2-title-link {
-                        border-bottom: 1px solid white;
-                    }
-                }
-
-                .lv2-title-link {
-                    font-size: 0.6rem;
-                    border-bottom: 1px solid transparent;
-                }
-            }
-        }
-        
-    }
-
-    button.expand {
-        transform: rotate(180deg);
-    }
-}
 
 .footer-pages {
     grid-column: 3 / 4;

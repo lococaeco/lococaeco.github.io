@@ -1,23 +1,19 @@
 {
-  "name": "minimal-mistakes",
+  "name": "lococaeco-blog",
   "private": true,
-  "version": "4.27.3",
-  "description": "Minimal Mistakes 2 column Jekyll theme.",
+  "version": "1.0.0",
+  "description": "lococaeco personal blog",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mmistakes/minimal-mistakes.git"
+    "url": "https://github.com/lococaeco/lococaeco.github.io.git"
   },
   "keywords": [
     "jekyll",
-    "theme",
-    "minimal"
+    "blog"
   ],
-  "author": "Michael Rose",
+  "author": "lococaeco",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mmistakes/minimal-mistakes/issues"
-  },
-  "homepage": "https://mmistakes.github.io/minimal-mistakes/",
+  "homepage": "https://lococaeco.github.io/",
   "engines": {
     "node": ">= 0.10.0"
   },
