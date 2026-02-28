@@ -43,6 +43,16 @@
     }
 }
 
+// Keep TOC anchor jumps below the sticky topbar.
+#post-content h1,
+#post-content h2,
+#post-content h3,
+#post-content h4,
+#post-content h5,
+#post-content h6 {
+    scroll-margin-top: 72px;
+}
+
 #post-content img {
     max-width: $content-width;
     height: auto;
@@ -107,6 +117,15 @@
 
 // mobile
 @media screen and (max-width: $max-width-tablet) {
+    #post-content h1,
+    #post-content h2,
+    #post-content h3,
+    #post-content h4,
+    #post-content h5,
+    #post-content h6 {
+        scroll-margin-top: 64px;
+    }
+
     #post-content img {
         max-width: $content-width-mobile;
     }

@@ -1,13 +1,121 @@
 #toc {
-    height: auto !important;
-    margin-left: 20px;
-    margin-top: 20px; // TODO 나중엔 마진 말고 딴 걸로 높이 조절할 수 있는지 보기
-    clear: both; // 정체??
+    position: fixed;
+    top: 94px;
+    right: 20px;
+    width: 260px;
+    max-height: calc(100vh - 120px);
+    overflow: auto;
+    padding: 14px 12px;
+    border: 1px solid $grey-400;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+}
 
-    grid-column: 5 / 6;
-    align-self: start; // 이거 있어야 sticky 작동함
-    position: sticky;
-    top: 100px;
-    
-    font-size: 12px;
+#toc .toc-title {
+    margin: 0 0 10px 0;
+    padding: 0 4px;
+    font-family: 'MaplestoryOTFBold';
+    font-size: 0.86rem;
+    letter-spacing: 0.03em;
+    color: $black;
+}
+
+#toc .toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#toc .toc-entry {
+    margin: 0;
+    line-height: 1.28;
+}
+
+#toc .toc-entry a {
+    display: block;
+    padding: 6px 8px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: $grey-600;
+    border-left: 3px solid transparent;
+    transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+    font-family: 'NanumSquareNeo-Variable';
+}
+
+#toc .toc-entry a:hover {
+    color: $main-color;
+    background: $blue-100;
+    border-left-color: $main-color;
+}
+
+#toc .toc-h1 a {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: $black;
+}
+
+#toc .toc-h2 a {
+    font-size: 0.79rem;
+    padding-left: 14px;
+}
+
+#toc .toc-h3 a {
+    font-size: 0.76rem;
+    padding-left: 20px;
+    color: $grey-500;
+}
+
+#toc::-webkit-scrollbar {
+    width: 7px;
+}
+
+#toc::-webkit-scrollbar-thumb {
+    background: $grey-400;
+    border-radius: 8px;
+}
+
+#toc::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+@media screen and (max-width: 1360px) {
+    #toc {
+        position: static;
+        width: $content-width;
+        max-width: $content-width;
+        max-height: none;
+        margin: 1rem auto 0;
+    }
+}
+
+@media screen and (max-width: $max-width) {
+    #toc {
+        width: $content-width-tablet;
+        max-width: $content-width-tablet;
+    }
+}
+
+@media screen and (max-width: $max-width-tablet) {
+    #toc {
+        width: $content-width-mobile;
+        max-width: $content-width-mobile;
+        padding: 12px 10px;
+        margin-top: 0.7rem;
+        border-radius: 12px;
+    }
+
+    #toc .toc-title {
+        font-size: 0.8rem;
+        margin-bottom: 8px;
+    }
+
+    #toc .toc-entry a {
+        padding: 5px 6px;
+    }
 }
