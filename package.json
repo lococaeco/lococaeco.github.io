@@ -17,6 +17,9 @@
   "engines": {
     "node": ">= 0.10.0"
   },
+  "scripts": {
+    "notion:local-images": "python scripts/notion_local_images.py"
+  },
   "devDependencies": {
     "uglify-js": "^3.17.4"
   }
