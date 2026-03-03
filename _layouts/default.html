@@ -12,11 +12,37 @@
             <title>lococaeco</title>
         {% endif %}
 
-        <!-- Open Graph -->
+        <!-- Open Graph / SEO -->
+        {% assign default_social_image = "/assets/images/favicon_io/android-chrome-512x512.png" %}
+        {% assign social_image = page.teaser | default: page.image | default: default_social_image %}
+        <link rel="canonical" href="{{ page.url | absolute_url }}">
+        <meta property="og:site_name" content="{{ site.title }}">
         <meta property="og:title" content="{{ page.title | default: site.title }}">
         <meta property="og:description" content="{{ page.excerpt | default: site.description | strip_html | truncatewords: 30 }}">
-        <meta property="og:type" content="website">
+        <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
         <meta property="og:url" content="{{ page.url | absolute_url }}">
+        <meta property="og:image" content="{{ social_image | absolute_url }}">
+        <meta property="og:image:alt" content="{{ page.title | default: site.title }}">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ page.title | default: site.title }}">
+        <meta name="twitter:description" content="{{ page.excerpt | default: site.description | strip_html | truncatewords: 30 }}">
+        <meta name="twitter:image" content="{{ social_image | absolute_url }}">
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "{{ site.title }}",
+          "url": "{{ site.url }}",
+          "publisher": {
+            "@type": "Organization",
+            "name": "{{ site.title }}",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "{{ '/assets/images/favicon_io/android-chrome-512x512.png' | absolute_url }}"
+            }
+          }
+        }
+        </script>
 
         <!-- custom css -->
         <link 
@@ -127,7 +153,7 @@
         <!-- blog ad -->
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1356766942667137"
             crossorigin="anonymous"></script>
-        <!-- 기본 -->
+        <!-- 湲곕낯 -->
         <ins class="adsbygoogle"
             style="display:block"
             data-ad-client="ca-pub-1356766942667137"
