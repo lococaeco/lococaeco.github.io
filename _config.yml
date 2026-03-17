@@ -46,6 +46,15 @@ encoding: "utf-8"
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
 
+# Plugins
+plugins:
+  - jekyll-sitemap
+
+
+# Permalink
+permalink: /:categories/:title/
+
+
 # Conversion
 markdown: kramdown
 highlighter: rouge
