@@ -4,7 +4,7 @@ excerpt: "Eigendecomposition의 수학적 정의와 ML에서 어떻게 활용되
 
 categories:
   - Math
-  - Linear Algebra
+  - Linear-Algebra
 tags:
   - Linear Algebra
   - Eigenvalue

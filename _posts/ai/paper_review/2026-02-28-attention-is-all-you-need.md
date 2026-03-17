@@ -4,7 +4,7 @@ excerpt: "Transformer를 처음 제안한 Vaswani et al. (2017) 논문을 리뷰
 
 categories:
   - AI
-  - Paper Review
+  - Paper-Review
 tags:
   - Paper Review
   - Transformer

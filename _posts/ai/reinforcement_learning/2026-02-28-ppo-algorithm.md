@@ -4,7 +4,7 @@ excerpt: "Proximal Policy Optimization의 핵심 아이디어와 구현 포인�
 
 categories:
   - AI
-  - Reinforcement Learning
+  - Reinforcement-Learning
 tags:
   - RL
   - PPO

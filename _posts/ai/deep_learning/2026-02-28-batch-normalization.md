@@ -4,7 +4,7 @@ excerpt: "딥러닝 학습을 안정화시키는 핵심 기법인 Batch Normaliz
 
 categories:
   - AI
-  - Deep Learning
+  - Deep-Learning
 tags:
   - Deep Learning
   - Optimization
