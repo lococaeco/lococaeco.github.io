@@ -1,7 +1,10 @@
 # Notion 이미지 자동화 더미 사용 파일
 
 아래 순서대로 복붙해서 쓰면 됩니다.
-
+python scripts/notion_local_images.py \
+  --post "_posts/ai/llm/2026-03-17-lora.md" \
+  --notion-dir "assets/notion/LoRA (Low-Rank Adaption of Large Language Models)" \
+  --verbose
 ---
 
 ## 1) 현재 글에 바로 적용 (네 경로 기준)
@@ -55,10 +58,15 @@ python scripts/notion_local_images.py --post $POST_PATH --notion-dir $NOTION_DIR
 ## 3) npm 명령으로 실행 (선택)
 
 ```powershell
-npm run notion:local-images -- `
-  --post "_posts/ai/llm/2026-03-01-openclaw-setting.md" `
-  --notion-dir "assets/notion/ExportBlock-0c12b87e-c312-4968-861e-8da87b41dde1-Part-1"
+npm run notion:local-images -- 
+  --post "_posts/ai/llm/2026-03-17-lora.md" 
+  --notion-dir "assets/notion/LoRA (Low-Rank Adaption of Large Language Models)"
 ```
+
+python scripts/notion_local_images.py \
+  --post "_posts/ai/llm/2026-03-17-lora.md" \
+  --notion-dir "assets/notion/LoRA (Low-Rank Adaption of Large Language Models)" \
+  --verbose
 
 ---
 

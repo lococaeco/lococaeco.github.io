@@ -20,7 +20,7 @@ from typing import Dict, Optional, Tuple
 from urllib.parse import unquote
 
 
-MD_IMAGE_RE = re.compile(r"!\[(?P<alt>[^\]]*)\]\((?P<target>[^)]+)\)")
+MD_IMAGE_RE = re.compile(r"!\[(?P<alt>[^\]]*)\]\((?P<target>(?:[^()]*\([^()]*\))*[^()]*)\)")
 HTML_IMAGE_RE = re.compile(
     r'(?P<prefix><img\b[^>]*?\bsrc=["\'])(?P<src>[^"\']+)(?P<suffix>["\'][^>]*>)',
     re.IGNORECASE,

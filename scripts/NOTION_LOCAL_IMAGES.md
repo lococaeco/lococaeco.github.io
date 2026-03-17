@@ -29,6 +29,11 @@ python scripts/notion_local_images.py `
   --dry-run
 ```
 
+python scripts/notion_local_images.py `
+  --post "_posts/ai/llm/2026-03-17-lora.md" `
+  --notion-dir "lococaeco.github.io/assets/notion/LoRA (Low-Rank Adaption of Large Language Models)" `
+  --dry-run
+
 ## Notes
 
 - A backup is created by default: `<post>.md.bak`
