@@ -17,6 +17,7 @@ Gemfile.lock
 
 # Node.js and NPM
 node_modules
+npm-cache/
 npm-debug.log*
 package-lock.json
 codekit-config.json
@@ -30,3 +31,6 @@ codekit-config.json
 .sass-cache
 _asset_bundler_cache
 _site
+
+# Local backups
+*.bak
