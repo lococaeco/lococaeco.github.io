@@ -12,6 +12,8 @@ tags:
 
 toc: true
 last_modified_at: 2026-02-28
+published: false
+sitemap: false
 ---
 
 ## 고유값과 고유벡터

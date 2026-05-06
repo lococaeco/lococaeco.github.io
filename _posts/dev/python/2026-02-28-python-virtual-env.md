@@ -12,6 +12,8 @@ tags:
 
 toc: true
 last_modified_at: 2026-02-28
+published: false
+sitemap: false
 ---
 
 ## 왜 가상환경이 필요한가?
