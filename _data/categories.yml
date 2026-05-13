@@ -4,30 +4,30 @@ categories:
     icon: fa-solid fa-brain
     lv2:
         - lv2_category: "LLM"
-          url: /category/ai/llm
+          url: /category/ai/llm/
         - lv2_category: "Reinforcement Learning"
-          url: /category/ai/reinforcement_learning
+          url: /category/ai/reinforcement_learning/
         - lv2_category: "Deep Learning"
-          url: /category/ai/deep_learning
+          url: /category/ai/deep_learning/
         - lv2_category: "Paper Review"
-          url: /category/ai/paper_review
+          url: /category/ai/paper_review/
   - lv1_category: "Dev"
     url: /category/dev/
     icon: fa-solid fa-laptop-code
     lv2:
         - lv2_category: "Python"
-          url: /category/dev/python
+          url: /category/dev/python/
         - lv2_category: "Git"
-          url: /category/dev/git
+          url: /category/dev/git/
         - lv2_category: "Docker"
-          url: /category/dev/docker
+          url: /category/dev/docker/
         - lv2_category: "Linux"
-          url: /category/dev/linux
+          url: /category/dev/linux/
   - lv1_category: "Math"
     url: /category/math/
     icon: fa-solid fa-square-root-variable
     lv2:
         - lv2_category: "Linear Algebra"
-          url: /category/math/linear_algebra
+          url: /category/math/linear_algebra/
         - lv2_category: "Probability & Statistics"
-          url: /category/math/probability_statistics
+          url: /category/math/probability_statistics/
