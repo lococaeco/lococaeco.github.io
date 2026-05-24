@@ -19,6 +19,8 @@ categories:
           url: /category/dev/python/
         - lv2_category: "Git"
           url: /category/dev/git/
+        - lv2_category: "Markdown"
+          url: /category/dev/markdown/
         - lv2_category: "Docker"
           url: /category/dev/docker/
         - lv2_category: "Linux"
