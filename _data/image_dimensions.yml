@@ -1,0 +1,109 @@
+# Intrinsic dimensions of the new local cover collection.
+/assets/images/teaser/teaser-ai-machine_learning.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-ai-machine_learning.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-ai-reinforcement_learning.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-ai-reinforcement_learning.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-ai-computer_vision.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-ai-computer_vision.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-programming-python.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-programming-python.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-programming-cpp.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-programming-cpp.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-programming-javascript.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-programming-javascript.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-programming-algorithm.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-programming-algorithm.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-programming-others.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-programming-others.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-dev-git.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-dev-git.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-dev-docker.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-dev-docker.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-cs-linux.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-cs-linux.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-math-linear_algebra.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-math-linear_algebra.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-math-math_for_ml.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-math-math_for_ml.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-robotics-autonomous_vehicle.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-robotics-autonomous_vehicle.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-robotics-engineering.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-robotics-engineering.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-robotics-perception.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-robotics-perception.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser-robotics-ros.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser-robotics-ros.png:
+  width: 640
+  height: 360
+/assets/images/teaser/teaser_hpe.webp:
+  width: 1200
+  height: 675
+/assets/images/teaser/teaser_hpe.jpg:
+  width: 640
+  height: 360

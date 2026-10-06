@@ -1,28 +1,28 @@
-<div id="sidebar">
+<aside id="sidebar" aria-label="블로그 카테고리" aria-hidden="true" inert>
     <div class="sidebar-header">
         <div class="header-background"></div>
-        <img src="/assets/images/profile.PNG" class="profile-img" />
+        <img src="{{ '/assets/images/profile.PNG' | relative_url }}" class="profile-img" alt="lococaeco 프로필" width="1024" height="1024" loading="lazy" decoding="async">
         
         <div class="name-wrap">
             <span class="usrname">lococaeco</span>
         </div>
 
         <div class="contact-list">
-            <a class="contact" href="https://github.com/lococaeco" >
-                <i class="fa-brands fa-github"></i>
+            <a class="contact" href="https://github.com/lococaeco" aria-label="lococaeco GitHub">
+                <i class="fa-brands fa-github" aria-hidden="true"></i>
             </a>
-            <a class="contact" href="mailto:sangwoobang@unist.ac.kr">
-                <i class="fa-regular fa-envelope"></i>
+            <a class="contact" href="mailto:sangwoobang@unist.ac.kr" aria-label="이메일 보내기">
+                <i class="fa-regular fa-envelope" aria-hidden="true"></i>
             </a>
         </div>
     </div>
 
-    <div class="sidebar-content">
+    <nav class="sidebar-content" aria-label="글 카테고리">
         <ul class="lv1-categories">
             <li class="lv1-category">
                 <div class="lv1-title-wrap">
                     <div class="lv1-title">
-                        <a href="/category/recent_posts/" class="lv1-title-link">All Recent Posts</a>
+                        <a href="{{ '/category/recent_posts/' | relative_url }}" class="lv1-title-link">All Recent Posts</a>
                     </div>
                 </div>
             </li>
@@ -32,19 +32,19 @@
                 <li class="lv1-category">
                     <div class="lv1-title-wrap">
                         <div class="lv1-title">
-                            <a href="{{ lv1.url | relative_url }}" class="lv1-title-link">{{ lv1.lv1_category }}</a>
-                            <button class="expand-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
+                            <a href="{{ lv1.url | relative_url }}" class="lv1-title-link">{{ lv1.lv1_category | escape }}</a>
+                            <button type="button" class="expand-btn" aria-label="{{ lv1.lv1_category | escape }} 하위 카테고리 펼치기" aria-expanded="false" aria-controls="subcategories-{{ forloop.index }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
                             </button>
                         </div>
                     </div>
                     
-                    <ul class="lv2-categories">
+                    <ul class="lv2-categories" id="subcategories-{{ forloop.index }}">
                         {% for lv2 in lv1.lv2 %}
                             <li class="lv2-category">
                                 <div class="lv2-title-wrap">
                                     <div class="lv2-title">
-                                        <a href="{{ lv2.url | relative_url }}" class="lv2-title-link">{{ lv2.lv2_category }}</a>
+                                        <a href="{{ lv2.url | relative_url }}" class="lv2-title-link">{{ lv2.lv2_category | escape }}</a>
                                     </div>
                                 </div>
                             </li>
@@ -53,5 +53,5 @@
                 </li>
             {% endfor %}
         </ul>
-    </div>
-</div>
+    </nav>
+</aside>

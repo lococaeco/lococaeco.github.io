@@ -20,10 +20,16 @@
 }
 
 .sidebar-btn {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    text-align: left;
+    font: inherit;
     cursor: pointer;
     margin-right: 30px;
     
     .bar1, .bar2, .bar3 {
+        display: block;
         width: 20px;
         height: 2px;
         background-color: white;
@@ -44,10 +50,19 @@
 
 .material-symbols-outlined {
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    font-size: 24px;
 
     a {
         color: white;
         text-decoration: none;
+    }
+
+    svg {
+        display: block;
+        width: 1em;
+        height: 1em;
     }
 
     // font-size: 28px;
@@ -81,8 +96,10 @@
 
     .progress-bar {
         height: 5px;
-        width: 0%;
+        width: 100%;
         background: $main-color;
+        transform: scaleX(0);
+        transform-origin: left;
     }
 }
 

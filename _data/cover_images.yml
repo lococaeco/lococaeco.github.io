@@ -1,0 +1,312 @@
+# Curated sources and credits for the 18 local blog covers.
+- id: teaser-ai-machine_learning
+  title: 머신러닝 · LLM
+  group: AI
+  image: /assets/images/teaser/teaser-ai-machine_learning.webp
+  legacy_image: /assets/images/teaser/teaser-ai-machine_learning.png
+  width: 1200
+  height: 675
+  description: 밝은 회색 공간에 투명 유리 패널이 여러 층으로 나열되고 파란 신호가 통과하는 3D 신경망. 가로 16:9 원본이라 넓은
+    대표 이미지에 가장 적합.
+  source_url: https://unsplash.com/photos/blue-capsule-and-glass-data-panels-4QVqSh4VvP4
+  author: Google DeepMind
+  creator: Novoto Studio
+  credit: Novoto Studio for Google DeepMind / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1665690399857-9de8bbbeb108?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: b552248f3efff19ab6279cad566771098656cd25ba13cc344906052504d3f0c1
+- id: teaser-ai-reinforcement_learning
+  title: 강화학습
+  group: AI
+  image: /assets/images/teaser/teaser-ai-reinforcement_learning.webp
+  legacy_image: /assets/images/teaser/teaser-ai-reinforcement_learning.png
+  width: 1200
+  height: 675
+  description: 회색 베이지 배경에 목재 막대와 라임·황토색 직물 띠가 교차하는 강화학습 데이터 전송 조형물. 세로 4:5 원본으로 가로
+    커버에는 중앙 크롭 필요.
+  source_url: https://unsplash.com/photos/a-group-of-bamboo-sticks-oVm12cylnBw
+  author: Google DeepMind
+  creator: Vincent Schwenk
+  credit: Vincent Schwenk for Google DeepMind / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1655634322560-45fb577df329?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: 5915325fe3fb8dd8b9c0726d813003e6466470bf27a5606cbabf0677e77646b0
+- id: teaser-ai-computer_vision
+  title: 컴퓨터 비전
+  group: AI
+  image: /assets/images/teaser/teaser-ai-computer_vision.webp
+  legacy_image: /assets/images/teaser/teaser-ai-computer_vision.png
+  width: 1200
+  height: 675
+  description: 민트·파랑·보라 색상표 위에 놓인 정밀 확대경. 렌즈와 색채 인식 주제를 밝고 정돈된 실제 사진으로 표현하며, 중앙 가로
+    크롭에서도 확대경과 색상 그리드를 유지.
+  source_url: https://unsplash.com/photos/close-up-photo-of-black-camera-lens-hqCEQTc5gZA
+  author: Markus Spiske
+  creator: null
+  credit: Markus Spiske / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1510511336377-1a9caa095849?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: 7c9ceeca1b17cf1bf0a5dd9843a526ebb9350d912111893266c124e28026e82e
+- id: teaser-programming-python
+  title: Python
+  group: 프로그래밍
+  image: /assets/images/teaser/teaser-programming-python.webp
+  legacy_image: /assets/images/teaser/teaser-programming-python.png
+  width: 1200
+  height: 675
+  description: 실제 Python 소스 코드를 담은 다크 모니터. 시안·노랑·분홍 구문색과 얕은 초점.
+  source_url: https://unsplash.com/photos/a-computer-screen-with-a-bunch-of-code-on-it-ieic5Tq8YMk
+  author: Chris Ried
+  creator: null
+  credit: Chris Ried / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1515879218367-8466d910aaa4?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: b000f183aff5a5c136fe41e5eb19da2c692fcd41951550de5df8b03c9f6184da
+- id: teaser-programming-cpp
+  title: C++ · 시스템 프로그래밍
+  group: 프로그래밍
+  image: /assets/images/teaser/teaser-programming-cpp.webp
+  legacy_image: /assets/images/teaser/teaser-programming-cpp.png
+  width: 1200
+  height: 675
+  description: 시스템 프로그래밍을 연상시키는 PCB 매크로. 청록·주황 조명의 반도체와 회로 패턴.
+  source_url: https://unsplash.com/photos/blue-circuit-board-jXd2FSvcRr8
+  author: Umberto
+  creator: null
+  credit: Umberto / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1562408590-e32931084e23?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: 5494918e010ddcdaf6ae3c385d4aa722955e613c8987b7f9ff42756a897495e1
+- id: teaser-programming-javascript
+  title: JavaScript
+  group: 프로그래밍
+  image: /assets/images/teaser/teaser-programming-javascript.webp
+  legacy_image: /assets/images/teaser/teaser-programming-javascript.png
+  width: 1200
+  height: 675
+  description: React/JSX 코드와 프로젝트 트리가 보이는 검은 화면. 청록색 화면 가장자리.
+  source_url: https://unsplash.com/photos/a-computer-screen-with-a-bunch-of-code-on-it-YD2BtJs6m_Y
+  author: Rahul Mishra
+  creator: null
+  credit: Rahul Mishra / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1724166551426-77aa7328d053?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: fc97d20d2f6d98780d4f145c68022bbb4a2c58747f8d79d746781718f9fbd7ce
+- id: teaser-programming-algorithm
+  title: 알고리즘
+  group: 프로그래밍
+  image: /assets/images/teaser/teaser-programming-algorithm.webp
+  legacy_image: /assets/images/teaser/teaser-programming-algorithm.png
+  width: 1200
+  height: 675
+  description: 금빛 노드와 가는 연결선이 만드는 입체 네트워크
+  source_url: https://unsplash.com/photos/a-close-up-of-a-spider-web-37x7-sBhwf8
+  author: Google DeepMind
+  creator: Novoto Studio
+  credit: Novoto Studio for Google DeepMind / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1665690399457-58110a2dbdac?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: f353675a1e5be77c99b67eb7599b7e37add3e70bf85a2f015aa7b625fb2dbe72
+- id: teaser-programming-others
+  title: Markdown · 개발 이야기
+  group: 프로그래밍
+  image: /assets/images/teaser/teaser-programming-others.webp
+  legacy_image: /assets/images/teaser/teaser-programming-others.png
+  width: 1200
+  height: 675
+  description: 청록색과 주황색으로 빛나는 코드 화면
+  source_url: https://unsplash.com/photos/lines-of-html-codes-4hbJ-eymZ1o
+  author: Florian Olivo
+  creator: null
+  credit: Florian Olivo / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1542831371-29b0f74f9713?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: 2fc150af48874201928b51a4a476151005446030ca4275fd75759224b39a542d
+- id: teaser-dev-git
+  title: Git · 협업
+  group: 개발 환경
+  image: /assets/images/teaser/teaser-dev-git.webp
+  legacy_image: /assets/images/teaser/teaser-dev-git.png
+  width: 1200
+  height: 675
+  description: PHP/HTML 소스 코드의 사선 클로즈업. Git 고유 UI는 아니며 코드 작업을 표현하는 사진.
+  source_url: https://unsplash.com/photos/monitor-showing-java-programming-OqtafYT5kTw
+  author: Ilya Pavlov
+  creator: null
+  credit: Ilya Pavlov / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1461749280684-dccba630e2f6?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: 1ad7bc6e104cf2ee30d1def76d757a5013295c086cb0be4e15775e483cbbf917
+- id: teaser-dev-docker
+  title: Docker · 컨테이너
+  group: 개발 환경
+  image: /assets/images/teaser/teaser-dev-docker.webp
+  legacy_image: /assets/images/teaser/teaser-dev-docker.png
+  width: 1200
+  height: 675
+  description: 파란 하늘 아래 노랑·주황 물류 컨테이너가 층층이 쌓인 사진. 소프트웨어 컨테이너를 비유.
+  source_url: https://unsplash.com/photos/assorted-color-filed-intermodal-containers-tjX_sniNzgQ
+  author: frank mckenna
+  creator: null
+  credit: frank mckenna / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1493946740644-2d8a1f1a6aff?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: 53398d003d050fd0b459be30a7a94d85dd4a66627f863388ee7dcf0cac5a410d
+- id: teaser-cs-linux
+  title: Linux
+  group: 개발 환경
+  image: /assets/images/teaser/teaser-cs-linux.webp
+  legacy_image: /assets/images/teaser/teaser-cs-linux.png
+  width: 1200
+  height: 675
+  description: Debian 로고와 시스템 정보가 표시된 Linux 터미널. 어두운 바탕과 붉은 ASCII 포인트.
+  source_url: https://unsplash.com/photos/a-computer-screen-with-a-program-running-on-it-NLSXFjl_nhc
+  author: Lukas
+  creator: null
+  credit: Lukas / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1640552435388-a54879e72b28?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: 833c7a4fdf1c216b84e965495487fda6d39ddd1bcd13c30ecfc5052413de5ef1
+- id: teaser-math-linear_algebra
+  title: 선형대수
+  group: 수학
+  image: /assets/images/teaser/teaser-math-linear_algebra.webp
+  legacy_image: /assets/images/teaser/teaser-math-linear_algebra.png
+  width: 1200
+  height: 675
+  description: 흰 정육면체 배열을 관통하는 세로 광선과 파란 작은 셀. 행렬·텐서·선형대수를 연상시키는 간결한 가로 16:9 3D 시각화.
+  source_url: https://unsplash.com/photos/a-white-cube-with-blue-squares-4sRFTaQSM8Q
+  author: Google DeepMind
+  creator: Novoto Studio
+  credit: Novoto Studio for Google DeepMind / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1665690399850-036127c5da17?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: 57c0636403769212df32dd1c0682387c67838ccb4ccb822f0fdeeebf8e944481
+- id: teaser-math-math_for_ml
+  title: 머신러닝 수학
+  group: 수학
+  image: /assets/images/teaser/teaser-math-math_for_ml.webp
+  legacy_image: /assets/images/teaser/teaser-math-math_for_ml.png
+  width: 1200
+  height: 675
+  description: 연회색 배경 중앙의 보라색 와이어프레임 뇌, 왼쪽 민트색 추상 링, 가는 흰 격자. 가로 16:9 원본으로 넓은 여백과
+    현대적인 색감.
+  source_url: https://unsplash.com/photos/wireframe-brain-with-purple-highlights-LaKwLAmcnBc
+  author: Google DeepMind
+  creator: Novoto Studio
+  credit: Novoto Studio for Google DeepMind / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1664447972779-316251bd8bd7?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: 45cf6575f06c6a2ab7ad3be8c6cc3a50368ba69cf2676db17d82610f301adb16
+- id: teaser-robotics-autonomous_vehicle
+  title: 자율주행
+  group: 로보틱스
+  image: /assets/images/teaser/teaser-robotics-autonomous_vehicle.webp
+  legacy_image: /assets/images/teaser/teaser-robotics-autonomous_vehicle.png
+  width: 1200
+  height: 675
+  description: 도심의 실제 흰색 자율주행 차량. 지붕의 라이다와 주변 센서가 선명하게 보이는 구도.
+  source_url: https://unsplash.com/photos/a-white-self-driving-car-on-a-city-street--NuUks4RSpo
+  author: Leo_Visions
+  creator: null
+  credit: Leo_Visions / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1764983432146-0217568c8a00?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: d2628c3dd99dc85178fdd414e30ce3065a64a0313ac29640afbd203d18296fee
+- id: teaser-robotics-engineering
+  title: 로봇 공학
+  group: 로보틱스
+  image: /assets/images/teaser/teaser-robotics-engineering.webp
+  legacy_image: /assets/images/teaser/teaser-robotics-engineering.png
+  width: 1200
+  height: 675
+  description: 푸른 실험실의 정밀 로봇 팔
+  source_url: https://unsplash.com/photos/a-robotic-arm-in-a-clean-minimalist-laboratory-setting-gEtezQMsu64
+  author: Brecht Corbeel
+  creator: null
+  credit: Brecht Corbeel / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1784821856280-401b76b03266?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: 34d044bc065e50589536dc8dd1dfe5de10c7c477bfd8eac378602fae2f539764
+- id: teaser-robotics-perception
+  title: 로봇 인지
+  group: 로보틱스
+  image: /assets/images/teaser/teaser-robotics-perception.webp
+  legacy_image: /assets/images/teaser/teaser-robotics-perception.png
+  width: 1200
+  height: 675
+  description: 검은 배경 중앙 하단에 놓인 카메라 렌즈. 넓은 여백과 은은한 녹색 반사.
+  source_url: https://unsplash.com/photos/a-camera-lens-on-a-black-background-YFGguxtAvWA
+  author: Thomas Murphy
+  creator: null
+  credit: Thomas Murphy / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1638128206917-d544cfb6e263?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: 3d95153325b0cb14b7dbea040906beb639f9926c66dd550200f83e0a6617e890
+- id: teaser-robotics-ros
+  title: ROS
+  group: 로보틱스
+  image: /assets/images/teaser/teaser-robotics-ros.webp
+  legacy_image: /assets/images/teaser/teaser-robotics-ros.png
+  width: 1200
+  height: 675
+  description: 밝은 연구실에서 작동하는 산업용 로봇팔과 금속 그리퍼. 청록색 포인트.
+  source_url: https://unsplash.com/photos/gray-metal-machine-stand-Uz0uQXvOtEY
+  author: Franck V.
+  creator: null
+  credit: Franck V. / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1531837404483-bdbd0d209ec1?fm=webp&fit=crop&w=1200&h=675&q=82&crop=center
+  sha256: 7c7775bcf104aa298d6809838f90d8866ba20dcd84f2b5b8c4df8d19d3fad0f7
+- id: teaser_hpe
+  title: 사람 자세 추정
+  group: 컴퓨터 비전
+  image: /assets/images/teaser/teaser_hpe.webp
+  legacy_image: /assets/images/teaser/teaser_hpe.jpg
+  width: 1200
+  height: 675
+  description: 보라·분홍 하늘 앞에서 두 사람이 공중 점프하는 전신 실루엣. 얼굴이 드러나지 않고 팔다리 자세가 뚜렷해 Human Pose
+    Estimation 주제에 적합. 3:2 원본은 위쪽 기준 16:9 크롭을 권장(손끝 보존).
+  source_url: https://unsplash.com/photos/silhouette-of-two-people-jumping-WTrfvtoe3yM
+  author: JOSHUA COLEMAN
+  creator: null
+  credit: JOSHUA COLEMAN / Unsplash
+  license_url: https://unsplash.com/license
+  license_name: Unsplash License
+  retrieved_on: '2026-10-07'
+  download_url: https://images.unsplash.com/photo-1534828894924-78721b6c66ee?fm=webp&fit=crop&w=1200&h=675&q=82&crop=top
+  sha256: de34c8b92f5df080e36fa921f2e4120fe5fb0a469b5b6d0062f5195493659530

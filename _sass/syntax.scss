@@ -1,0 +1,41 @@
+// Rouge highlights fenced code during the Jekyll build; no client library needed.
+// Colours preserve the previous GitHub dark code-block appearance.
+.highlighter-rouge > .highlight {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+pre.highlight {
+    margin: 0;
+    padding: 1em;
+    overflow-x: auto;
+    background: #0d1117;
+    color: #c9d1d9;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    tab-size: 4;
+
+    code {
+        padding: 0;
+        border: 0;
+        outline: 0;
+        border-radius: 0;
+        background: transparent;
+        color: inherit;
+        white-space: pre;
+    }
+
+    .c, .ch, .cd, .cm, .cp, .cpf, .c1, .cs { color: #8b949e; }
+    .k, .kc, .kd, .kn, .kp, .kr, .kt, .o, .ow { color: #ff7b72; }
+    .s, .sa, .sb, .sc, .dl, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss { color: #a5d6ff; }
+    .m, .mb, .mf, .mh, .mi, .il, .mo, .l, .ld, .no, .nv, .vc, .vg, .vi, .vm { color: #79c0ff; }
+    .nf, .fm, .nc, .nd { color: #d2a8ff; }
+    .na, .nt { color: #7ee787; }
+    .nb, .bp, .nn { color: #ffa657; }
+    .err, .gr { color: #f85149; }
+    .gd { color: #ffdcd7; background-color: #67060c; }
+    .gi { color: #aff5b4; background-color: #033a16; }
+    .gh, .gu { color: #79c0ff; font-weight: bold; }
+    .ge { font-style: italic; }
+    .gs { font-weight: bold; }
+}

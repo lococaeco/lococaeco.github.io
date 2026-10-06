@@ -8,23 +8,23 @@
     grid-column: 3 / 4;
     padding: 50px 0;
 
-    h1, h2, h3 {
+    h1:not(.sr-only), h2:not(.list-title):not(.list-element-title), h3:not(.list-element-title) {
         font-weight: bold;
         font-family: 'MaplestoryOTFBold';
     }
 
-    h1 {
+    h1:not(.sr-only) {
         margin: 2rem 0 1rem 0;
         font-size: $font-size-h1;
         color: $main-color;
     }
 
-    h2 {
+    h2:not(.list-title):not(.list-element-title) {
         padding: 1.6rem 0px 0.9rem 0px;
         font-size: $font-size-h2;
     }
 
-    h3 {
+    h3:not(.list-element-title) {
         padding: 1.4rem 0px 0.7rem 0px;
         font-size: $font-size-h3;
     }
@@ -131,15 +131,15 @@
     }
 
     .content-wrap {
-        h1 {
+        h1:not(.sr-only) {
             font-size: 1.7rem;
         }
 
-        h2 {
+        h2:not(.list-title):not(.list-element-title) {
             font-size: 1.4rem;
         }
 
-        h3 {
+        h3:not(.list-element-title) {
             font-size: 1.2rem;
         }
     }

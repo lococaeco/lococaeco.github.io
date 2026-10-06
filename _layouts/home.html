@@ -6,17 +6,18 @@ title: Home
 <div class="layout-default">
     <div id="home-content" class="content-default">
         <div class="content-wrap">
+            <h1 class="sr-only">{{ site.title | escape }} — {{ site.description | escape }}</h1>
             
             <!-- categories list -->
             <div class="list-basic">
-                <div class="list-title">Categories</div>
+                <h2 class="list-title">Categories</h2>
 
                 <div class="list-elements" id="list-categories">
                     {% assign categories = site.data.categories.categories %}
                     {% for lv1 in categories %}
-                        <a href="{{ lv1.url | relative_url }}" id="category-single" class="post-link">
-                            <div class="category-icon"><i class="{{ lv1.icon }}"></i></div>
-                            <div class="category-title">{{ lv1.lv1_category }}</div>
+                        <a href="{{ lv1.url | relative_url }}" class="post-link category-single">
+                            <div class="category-icon"><i class="{{ lv1.icon }}" aria-hidden="true"></i></div>
+                            <div class="category-title">{{ lv1.lv1_category | escape }}</div>
                         </a>
                     {% endfor %}
                 </div>
@@ -25,18 +26,20 @@ title: Home
 
             <!-- featured posts -->
             <div class="list-basic">
-                <div class="list-title">Featured Posts</div>
+                <h2 class="list-title">Featured Posts</h2>
 
                 <div id="list-featured">
                     {% for post in site.posts %} 
                         {% if post.feature == true %}
-                            <a href="{{ post.url }}" id="featured-single" class="post-link"
-                            style="background: linear-gradient(0deg, rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url({{ post.teaser | relative_url}}); background-position:center center; background-size: cover">
+                            {% capture featured_teaser %}{% include image_path.html path=post.teaser %}{% endcapture %}
+                            {% assign featured_teaser = featured_teaser | strip %}
+                            <a href="{{ post.url | relative_url }}" class="post-link featured-single"
+                            style="background: linear-gradient(0deg, rgba(0,0,0,0.68),rgba(0,0,0,0.58)){% unless featured_teaser == '' %}, url('{{ featured_teaser | relative_url | escape }}'){% endunless %}; background-position:center center; background-size: cover">
                                 <div class="list-element-text">
-                                    <div class="list-element-category">{{ post.categories | join: ' / ' }}</div>
-                                    <div class="list-element-title">{{ post.title }}</div>
-                                    <div class="list-element-date">{{ post.date | date: "%Y. %m. %d" }}</div>
-                                    <div class="list-element-excerpt">{{ post.excerpt | default: "" }}</div>
+                                    <div class="list-element-category">{{ post.categories | join: ' / ' | escape }}</div>
+                                    <h3 class="list-element-title">{{ post.title | escape }}</h3>
+                                    <time class="list-element-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y. %m. %d" }}</time>
+                                    <div class="list-element-excerpt">{{ post.excerpt | default: "" | strip_html | escape }}</div>
                                 </div>
                             </a>
                         {% endif %}
@@ -46,14 +49,14 @@ title: Home
 
             <!-- recent posts -->
             <div class="list-basic">
-                <div class="list-title">Recent Posts</div>
+                <h2 class="list-title">Recent Posts</h2>
 
                 <div id="list-default">
                     {% for post in site.posts limit : 4 %} 
                         {% if forloop.first %}
-                            {% include archive_single_teaser.html id="default-single-first"%}
+                            {% include archive_single_teaser.html variant="default-single-first" heading=3 %}
                         {% else %}
-                            {% include archive_single_teaser.html id="default-single-other"%}
+                            {% include archive_single_teaser.html variant="default-single-other" heading=3 %}
                         {% endif %}
                     {% endfor %}
                 </div>

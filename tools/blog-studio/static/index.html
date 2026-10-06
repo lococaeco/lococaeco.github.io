@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f8f7f3">
+  <title>Blog Studio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2326302d'/%3E%3Cpath d='M20 16h14c14 0 15 15 6 17 12 3 8 17-4 17H20zm9 8v8h5c6 0 6-8 0-8zm0 15v4h6c5 0 5-7 0-7h-6z' fill='%23faf8f2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/vendor/toastui-editor.css">
+  <link rel="stylesheet" href="/static/vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="/static/style.css">
+  <script defer src="/static/vendor/purify.min.js"></script>
+  <script defer src="/static/vendor/toastui-editor-all.min.js"></script>
+  <script defer src="/static/vendor/ko-kr.js"></script>
+  <script defer src="/static/vendor/katex/katex.min.js"></script>
+  <script defer src="/static/vendor/katex/auto-render.min.js"></script>
+  <script defer src="/static/app.js"></script>
+</head>
+<body>
+  <div class="app-shell" id="app">
+    <aside class="sidebar" id="sidebar" aria-label="글 보관함">
+      <a class="brand" href="/" aria-label="Blog Studio 홈"><span class="brand-symbol">b.</span><span>Blog Studio<small>나만의 글쓰기 공간</small></span></a>
+      <button class="button primary new-button" id="new-post"><span aria-hidden="true">＋</span> 새 글 쓰기 <kbd>N</kbd></button>
+      <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="제목이나 태그로 검색" aria-label="글 검색"><kbd>/</kbd></label>
+      <nav class="library-nav" aria-label="보관함 종류">
+        <button class="nav-item active" data-view="all"><span>▤</span> 모든 글 <b id="count-all">0</b></button>
+        <button class="nav-item" data-view="drafts"><span>✎</span> 작성 중 <b id="count-drafts">0</b></button>
+        <button class="nav-item" data-view="templates"><span>▦</span> 글 템플릿</button>
+      </nav>
+      <div class="list-label"><span id="list-heading">내 블로그</span><button class="icon-button" id="refresh" title="목록 새로고침" aria-label="목록 새로고침">↻</button></div>
+      <div class="post-list" id="post-list" aria-live="polite"></div>
+      <div class="sidebar-bottom"><div class="repo-info"><span class="status-dot"></span><span id="repo-name">로컬 작업 공간</span></div><div class="bottom-actions"><button id="import-button">Markdown 가져오기</button><button id="help-button" aria-label="도움말 및 단축키">?</button></div><input id="import-file" type="file" accept=".md,.markdown,.txt,text/markdown,text/plain" hidden></div>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <div class="topbar-start"><button class="icon-button menu-toggle" id="menu-toggle" aria-label="보관함 열기" aria-expanded="false">☰</button><div class="breadcrumb"><span>WORKSPACE</span><span aria-hidden="true">/</span><strong id="document-label">새로운 생각을 담아보세요</strong></div></div>
+        <div class="topbar-actions"><span class="save-status" id="save-status" role="status"><span class="status-dot"></span> 준비 완료</span><button class="icon-button" id="focus-button" title="집중 모드 (Ctrl/⌘ + Shift + F)" aria-label="집중 모드" aria-pressed="false">⛶</button><button class="button subtle" id="metadata-button" aria-expanded="true" aria-controls="metadata-panel">글 설정</button><button class="button primary" id="publish-button" disabled>발행 준비 <span aria-hidden="true">↗</span></button></div>
+      </header>
+
+      <div class="work-area">
+        <section class="welcome" id="welcome">
+          <div class="welcome-eyebrow"><span class="status-dot"></span> YOUR PERSONAL WRITING STUDIO</div>
+          <h1>생각을 쓰는 일에만<br>집중하세요<span>.</span></h1>
+          <p>초안에서 블로그까지, 한 공간에서.<br>이미지는 붙여넣고, 글은 자동으로 보관하세요.</p>
+          <button class="button primary large" id="welcome-new">첫 문장 시작하기 <span aria-hidden="true">↗</span></button>
+          <div class="welcome-notes"><div><b>01</b><strong>편하게 쓰고</strong><span>문서처럼 쓰는 시각 편집기</span></div><div><b>02</b><strong>안심하고 보관하고</strong><span>자동 저장과 이전 버전 복원</span></div><div><b>03</b><strong>확인한 뒤 발행해요</strong><span>변경 파일 확인부터 Git 전송까지</span></div></div>
+          <div id="connection-error" class="callout error" hidden></div>
+        </section>
+
+        <section class="document" id="document" hidden aria-label="블로그 글 편집기">
+          <div class="recovery-banner" id="recovery-banner" hidden><span>이 브라우저에 아직 저장되지 않은 작성 내용이 있어요.</span><button id="recover-button">내용 복구</button><button id="discard-recovery">무시</button></div>
+          <div class="document-header"><div class="document-eyebrow"><span id="document-kind">DRAFT</span><span class="eyebrow-divider"></span><span id="document-category">나의 이야기</span></div><label class="visually-hidden" for="title">글 제목</label><textarea id="title" placeholder="제목을 입력하세요" rows="1" maxlength="300"></textarea><label class="visually-hidden" for="excerpt">글 소개</label><textarea id="excerpt" rows="1" placeholder="이 글을 소개하는 한 문장 (선택)" maxlength="1000"></textarea><div class="editor-tools"><div class="mode-switch" aria-label="편집 모드"><button id="mode-visual" aria-pressed="true">시각 편집</button><button id="mode-markdown" aria-pressed="false">Markdown</button></div><div class="editor-quick-actions"><button id="insert-images" title="이미지 넣기">▧ <span>이미지</span></button><button id="export-button" title="Markdown 내려받기">↓ <span>내려받기</span></button><button id="history-button" title="이전 저장 내역">◷ <span>기록</span></button></div></div><input id="image-files" type="file" accept="image/*" multiple hidden><div class="mode-notice" id="mode-notice" hidden></div></div>
+          <div class="editor-frame"><div id="editor"></div><div class="upload-indicator" id="upload-indicator" hidden role="status">이미지 업로드 중…</div></div>
+          <footer class="document-footer"><span id="word-count">0자 · 읽는 시간 1분</span><span>자동 저장 <span aria-hidden="true">·</span> <kbd>Ctrl/⌘ S</kbd> 지금 저장</span></footer>
+        </section>
+
+        <aside class="metadata" id="metadata-panel" hidden aria-label="글 설정">
+          <div class="panel-heading"><h2>글 설정</h2><button class="icon-button" id="metadata-close" title="글 설정 닫기" aria-label="글 설정 닫기">×</button></div>
+          <p class="panel-caption">독자가 만날 글의 모습을 정해요.</p>
+          <div class="field"><label for="category">카테고리</label><select id="category"></select></div>
+          <div class="field"><label for="tags">태그</label><input id="tags" placeholder="Python, 일상, 기록"><small>쉼표로 구분해서 입력하세요.</small></div>
+          <div class="field"><label for="post-date">작성 날짜</label><input id="post-date" type="date"><small id="timezone-label">Asia/Seoul 기준</small></div>
+          <div class="field"><label for="slug">주소 이름</label><input id="slug" placeholder="my-first-story" spellcheck="false"><small id="slug-help">비워두면 제목으로 자동 생성해요.</small></div>
+          <div class="field source-field" id="source-field" hidden><label>저장 파일</label><code id="source-path"></code></div>
+          <div class="field"><label for="teaser">대표 이미지 주소</label><div class="input-with-button"><input id="teaser" placeholder="/assets/images/…"><button id="teaser-upload" title="대표 이미지 업로드" aria-label="대표 이미지 업로드">↑</button></div><input type="file" id="teaser-file" accept="image/*" hidden><img id="teaser-preview" alt="대표 이미지 미리보기" hidden></div>
+          <hr><h3>표시 옵션</h3>
+          <label class="toggle-row"><span><strong>목차</strong><small>제목으로 자동 목차 만들기</small></span><input id="toc" type="checkbox" checked></label>
+          <label class="toggle-row"><span><strong>댓글</strong><small>글 아래 댓글 영역 표시</small></span><input id="comments" type="checkbox" checked></label>
+          <label class="toggle-row"><span><strong>수식</strong><small>MathJax 수식 사용</small></span><input id="mathjax" type="checkbox"></label>
+          <label class="toggle-row"><span><strong>추천 글</strong><small>테마의 추천 글 속성</small></span><input id="feature" type="checkbox"></label>
+          <label class="toggle-row"><span><strong>사이트에 공개</strong><small>끄면 Jekyll이 글을 표시하지 않아요</small></span><input id="published" type="checkbox" checked></label>
+          <div class="metadata-note">초안은 발행하기 전까지 블로그에 올라가지 않아요.</div>
+          <button class="text-danger" id="delete-draft">이 초안 삭제</button>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="publish-dialog" class="dialog publish-dialog"><div class="dialog-heading"><div><div class="eyebrow">READY WHEN YOU ARE</div><h2>마지막으로 살펴볼까요?</h2></div><button class="icon-button" data-close="publish-dialog" aria-label="발행 검토 닫기">×</button></div><div id="publish-checks"></div><div class="publish-options" id="publish-options"><label class="publish-option"><input type="radio" name="publish-mode" value="save" checked><span><strong>파일로 저장</strong><small>블로그 저장소에 글을 반영해요. Git 작업은 하지 않아요.</small></span></label><label class="publish-option"><input type="radio" name="publish-mode" value="commit"><span><strong>저장 + Git 커밋</strong><small>이 글과 새 이미지의 변경 이력을 로컬에 기록해요.</small></span></label><label class="publish-option"><input type="radio" name="publish-mode" value="push"><span><strong>저장 + GitHub 전송</strong><small>커밋을 원격 저장소에 올려요. 이후 사이트 빌드를 확인하세요.</small></span></label></div><p class="dialog-note">GitHub 전송 성공은 사이트 배포 완료를 뜻하지 않아요. 빌드와 게시 상태는 별도로 확인해 주세요.</p><div id="publish-result" hidden></div><div class="dialog-footer"><button class="button subtle" data-close="publish-dialog">계속 편집</button><button class="button primary" id="confirm-publish" disabled>파일로 저장</button></div></dialog>
+  <dialog id="history-dialog" class="dialog"><div class="dialog-heading"><div><div class="eyebrow">VERSION HISTORY</div><h2>이어온 문장들</h2></div><button class="icon-button" data-close="history-dialog" aria-label="저장 기록 닫기">×</button></div><p class="dialog-note">이전 내용으로 돌아가도 현재 내용은 기록에 보관돼요.</p><div id="history-list"></div></dialog>
+  <dialog id="help-dialog" class="dialog"><div class="dialog-heading"><div><div class="eyebrow">A LITTLE HELP</div><h2>쓰기에 더 가까이</h2></div><button class="icon-button" data-close="help-dialog" aria-label="도움말 닫기">×</button></div><div class="help-grid"><span>지금 초안 저장</span><kbd>Ctrl / ⌘ + S</kbd><span>집중 모드</span><kbd>Ctrl / ⌘ + Shift + F</kbd><span>글 검색</span><kbd>/</kbd><span>새 글</span><kbd>N</kbd></div><p class="dialog-note">이미지를 본문에 붙여넣거나 끌어 놓으세요. 기존 글은 원문을 유지하기 위해 Markdown 모드로 열어요. 수식, Liquid, 복잡한 HTML은 Markdown으로 편집하는 편이 좋아요.</p><p class="dialog-note">미리보기는 편집을 돕기 위한 화면이에요. 블로그 테마, Liquid, MathJax 렌더링은 실제 사이트와 다를 수 있어요.</p></dialog>
+  <dialog id="confirm-dialog" class="dialog small-dialog"><div class="dialog-heading"><h2 id="confirm-title">확인</h2></div><p id="confirm-description"></p><div class="dialog-footer"><button class="button subtle" id="confirm-cancel">취소</button><button class="button primary" id="confirm-accept">계속</button></div></dialog>
+  <div id="toast-region" class="toast-region" role="status" aria-live="polite"></div>
+</body>
+</html>

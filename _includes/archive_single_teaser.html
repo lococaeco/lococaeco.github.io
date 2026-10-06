@@ -1,16 +1,19 @@
-<a href="{{ post.url }}" id="{{ include.id | default: 'default-single-default' }}" class="post-link">
+<a href="{{ post.url | relative_url }}" class="post-link {{ include.variant | default: include.id | default: 'default-single-default' | escape }}">
     <div class="list-element-teaser">
         {% if post.teaser %}
-            <img src="{{ post.teaser }}" alt="{{ post.title }}">
+            {% capture card_teaser %}{% include image_path.html path=post.teaser %}{% endcapture %}
+            {% assign card_teaser = card_teaser | strip %}
+            {% assign card_dimensions = site.data.image_dimensions[card_teaser] %}
+            <img src="{{ card_teaser | relative_url | escape }}" alt="" loading="lazy" decoding="async"{% if card_dimensions %} width="{{ card_dimensions.width }}" height="{{ card_dimensions.height }}"{% endif %}>
         {% else %}
             <div class="empty-teaser"></div>
         {% endif %}
     </div>
 
     <div class="list-element-text">
-        <div class="list-element-category">{{ post.categories | join: ' / ' }}</div>
-        <div class="list-element-title">{{ post.title }}</div>
-        <div class="list-element-date">{{ post.date | date: "%Y. %m. %d" }}</div>
-        <div class="list-element-excerpt">{{ post.excerpt | default: "" }}</div>
+        <div class="list-element-category">{{ post.categories | join: ' / ' | escape }}</div>
+        <h{{ include.heading | default: 2 }} class="list-element-title">{{ post.title | escape }}</h{{ include.heading | default: 2 }}>
+        <time class="list-element-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y. %m. %d" }}</time>
+        <div class="list-element-excerpt">{{ post.excerpt | default: "" | strip_html | escape }}</div>
     </div>
 </a>

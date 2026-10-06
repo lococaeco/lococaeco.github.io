@@ -23,7 +23,7 @@
           {% assign _title = _titlePart[1] | split: '</h' | first | strip_html | strip %}
           {% if _title != "" %}
             <li class="toc-entry toc-h{{ headerLevel }}">
-              <a href="#{{ _idRaw }}">{{ _title }}</a>
+              <a href="#{{ _idRaw | escape }}">{{ _title | escape }}</a>
             </li>
           {% endif %}
         {% endif %}

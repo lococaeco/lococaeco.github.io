@@ -1,16 +1,21 @@
 ---
 layout: null
+sitemap: false
 ---
 [
   {% for post in site.posts %}
+    {% assign search_teaser_source = post.teaser | default: post.header.teaser | default: '' %}
+    {% capture search_teaser %}{% include image_path.html path=search_teaser_source %}{% endcapture %}
+    {% assign search_teaser = search_teaser | strip %}
+    {% unless search_teaser == '' %}{% assign search_teaser = search_teaser | relative_url %}{% endunless %}
     {
-      "title"      : {{ post.title | jsonify }},
-      "categories" : "{{ post.categories | join: ', ' }}",
-      "tags"       : "{{ post.tags | join: ', ' }}",
-      "url"        : "{{ post.url | relative_url }}",
-      "date"       : "{{ post.date | date: '%Y.%m.%d' }}",
-      "excerpt"    : {{ post.excerpt | strip_html | truncatewords: 30 | jsonify }},
-      "teaser"     : "{{ post.header.teaser | default: '/assets/images/teaser/default.png' }}"
+      "title": {{ post.title | jsonify }},
+      "categories": {{ post.categories | join: ', ' | jsonify }},
+      "tags": {{ post.tags | join: ', ' | jsonify }},
+      "url": {{ post.url | relative_url | jsonify }},
+      "date": {{ post.date | date: '%Y.%m.%d' | jsonify }},
+      "excerpt": {{ post.excerpt | strip_html | normalize_whitespace | truncate: 160 | jsonify }},
+      "teaser": {{ search_teaser | jsonify }}
     }{% unless forloop.last %},{% endunless %}
   {% endfor %}
 ]

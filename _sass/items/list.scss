@@ -5,7 +5,7 @@
     border-bottom: 2px solid $black;
     margin-bottom: 2rem;
 
-    #list-element-category {
+    .category-list-item {
         padding: 1.4rem 0.5rem;
 
         &:last-child {
@@ -35,7 +35,7 @@
         }
     }
     
-    #list-element-category:hover {
+    .category-list-item:hover {
         background-color: $blue-100;
         .list-element-url {
             box-shadow: none !important;
@@ -61,7 +61,7 @@
     margin-bottom: 2rem;
     padding: 1rem 0.8rem;
 
-    #list-element-category {
+    .category-list-item {
         .category-name {
             font-size: 0.8rem !important;
             font-family: 'GmarketSansMedium';
@@ -70,7 +70,7 @@
         }
     }
     
-    #list-element-category:hover {
+    .category-list-item:hover {
         .list-element-url {
             box-shadow: none !important;
 
@@ -111,6 +111,7 @@
         object-fit: cover;
         transition: all 0.3s ease;
         width: 100%;
+        height: auto;
     }
 
     .empty-teaser {
@@ -130,11 +131,27 @@
     line-height: 1.1rem;
 }
 
+.list-element-date {
+    display: block;
+}
+
 .list-element-title {
+    padding: 0;
     font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 0.7rem;
     line-height: 1.6rem;
+}
+
+#results-container {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+#results-container .search-result {
+    margin: 0;
+    list-style: none;
 }
 
 @media screen and (max-width: $max-width-tablet) {
@@ -151,7 +168,7 @@
     gap: 1.2rem;
 }
 
-#default-single-first {
+.default-single-first {
     grid-column: 1 / 2;
     grid-row: 1 / 4;
 
@@ -160,7 +177,7 @@
     }
 }
 
-#default-single-other {
+.default-single-other {
     display: grid;
     grid-template-columns: 6rem auto;
     gap: 1rem;
@@ -186,7 +203,7 @@
     
 }
 
-#default-single-default {
+.default-single-default {
     display: grid;
     grid-template-columns: 8rem auto;
     gap: 1rem;
@@ -212,7 +229,7 @@
         gap: 1.2rem;
     }
 
-    #default-single-default {
+    .default-single-default {
         padding-bottom: 1rem;
         border-bottom: 1px solid $grey-400;
         margin-bottom: 1rem;
@@ -220,7 +237,7 @@
 }
 
 @media screen and (max-width: 380px) {
-    #default-single-default{
+    .default-single-default{
         grid-template-columns: 1fr;
 
         .list-element-teaser {
@@ -238,7 +255,7 @@
     grid-gap: 18px;
 }
 
-#category-single {
+.category-single {
     padding: 1rem;
     border-radius: 0.8rem;
     background: $grey-100;
@@ -263,7 +280,7 @@
     }
 }
 
-#category-single:hover {
+.category-single:hover {
     background-color: $main-color;
 
     .category-icon {
@@ -286,12 +303,12 @@
         grid-gap: 0.5rem;
     }
 
-    #category-single {
+    .category-single {
         padding: 0.7rem;
         border-radius: 0.5rem;
     }
 
-    #category-single {
+    .category-single {
         .category-title {
             font-size: small;
         }
@@ -306,7 +323,7 @@
     gap: 1.2rem;
 }
 
-#featured-single {
+.featured-single {
     padding: 1.2rem;
     border-radius: 0.7rem;
     min-height: 13rem;
@@ -323,7 +340,7 @@
     }
 }
 
-#featured-single:hover {
+.featured-single:hover {
     .list-element-title{
         color: $main-color;
     }

@@ -1,33 +1,33 @@
-<div id="topbar">
+<header id="topbar">
     <!-- progress indicator -->
-    <div class="progress-bar-wrap">
+    <div class="progress-bar-wrap" aria-hidden="true">
         <div class="progress-bar" id="indicator"></div>
     </div>
 
     <div class="topbar-main">
 
         <!-- sidebar btn -->
-        <div class="sidebar-btn" onclick="openSidebar(this)">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-        </div>
+        <button type="button" class="sidebar-btn" onclick="openSidebar(this)" aria-label="카테고리 메뉴 열기" aria-controls="sidebar" aria-expanded="false">
+            <span class="bar1"></span>
+            <span class="bar2"></span>
+            <span class="bar3"></span>
+        </button>
 
         <!-- home btn -->
         <span class="material-symbols-outlined icon-home">
-            <a href="/">home</a>
+            <a href="{{ '/' | relative_url }}" aria-label="블로그 홈"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h5v-7h4v7h5V9"/></svg></a>
         </span>
 
-        <div class="topbar-page-links">
-            <a class="topbar-page-link" href="/category/recent_posts">Posts</a>
-            <a class="topbar-page-link" href="/about">About</a>
-        </div>
+        <nav class="topbar-page-links" aria-label="주요 페이지">
+            <a class="topbar-page-link" href="{{ '/category/recent_posts/' | relative_url }}">Posts</a>
+            <a class="topbar-page-link" href="{{ '/about' | relative_url }}">About</a>
+        </nav>
         
 
         <!-- search btn -->
         <span class="material-symbols-outlined icon-search">
-            <a href="/search">search</a>
+            <a href="{{ '/search' | relative_url }}" aria-label="글 검색"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></a>
         </span>        
     </div>
 
-</div>
+</header>

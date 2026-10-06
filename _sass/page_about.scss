@@ -10,6 +10,7 @@
 #info-container > div,
 #cv-container > div {
     width: $content-width;
+    max-width: calc(100% - 2rem);
     margin: auto;
 }
 

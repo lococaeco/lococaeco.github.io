@@ -1,36 +1,42 @@
 @charset "utf-8";
 @font-face {
     font-family: 'NanumSquareNeo-Variable';
+    font-display: swap;
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 } // 나눔스퀘어네오
 @font-face {
     font-family: 'GmarketSansMedium';
+    font-display: swap;
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 } // G마켓 산스, 300, 500, 700
 @font-face {
     font-family: 'yg-jalnan';
+    font-display: swap;
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 } // 여기어때 잘난
 @font-face {
     font-family: 'BMJUA';
+    font-display: swap;
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 } // 배민 주아
 @font-face {
     font-family: 'MaplestoryOTFBold';
+    font-display: swap;
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 } // 메이플스토리 / 300, 700
 @font-face {
     font-family: 'SBAggroB';
+    font-display: swap;
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
     font-weight: normal;
     font-style: normal;
@@ -140,7 +146,7 @@ div.highlighter-rouge {
 
 }
 
-code.hljs {
+pre.highlight {
     border-radius: 8px;
 
     &::-webkit-scrollbar {
@@ -306,11 +312,32 @@ hr {
     }
 }
 
-//comment
-#disqus_thread {
+// Comments load only when the reader asks to see them.
+#post-comments {
     margin-top: 3rem;
     border-top: 1px solid $grey-400;
     padding-top: 3rem;
+}
+
+#load-comments {
+    padding: 0.7rem 1.1rem;
+    border: 1px solid $main-color;
+    border-radius: 0.4rem;
+    background: white;
+    color: $main-color;
+    font: inherit;
+    cursor: pointer;
+
+    &:disabled {
+        cursor: wait;
+        opacity: 0.65;
+    }
+}
+
+#comments-status {
+    margin-top: 0.8rem;
+    color: $grey-600;
+    font-size: 0.85rem;
 }
 
 // import
@@ -327,3 +354,52 @@ hr {
 @import "items/toc";
 @import "items/topbar";
 @import "items/side_menu";
+@import "syntax";
+
+// Keyboard and assistive-technology helpers, after component resets.
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.skip-link {
+    position: fixed;
+    top: 0.7rem;
+    left: 0.7rem;
+    z-index: 100000000;
+    padding: 0.8rem 1rem;
+    background: white;
+    color: $main-color;
+    border: 2px solid $main-color;
+    border-radius: 0.3rem;
+    transform: translateY(-200%);
+
+    &:focus {
+        transform: translateY(0);
+    }
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+    outline: 2px solid $main-color !important;
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+    }
+}

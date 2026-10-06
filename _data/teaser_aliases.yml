@@ -1,0 +1,19 @@
+# Legacy cover URLs resolve to the optimized replacement.
+/assets/images/teaser/teaser-ai-machine_learning.png: /assets/images/teaser/teaser-ai-machine_learning.webp
+/assets/images/teaser/teaser-ai-reinforcement_learning.png: /assets/images/teaser/teaser-ai-reinforcement_learning.webp
+/assets/images/teaser/teaser-ai-computer_vision.png: /assets/images/teaser/teaser-ai-computer_vision.webp
+/assets/images/teaser/teaser-programming-python.png: /assets/images/teaser/teaser-programming-python.webp
+/assets/images/teaser/teaser-programming-cpp.png: /assets/images/teaser/teaser-programming-cpp.webp
+/assets/images/teaser/teaser-programming-javascript.png: /assets/images/teaser/teaser-programming-javascript.webp
+/assets/images/teaser/teaser-programming-algorithm.png: /assets/images/teaser/teaser-programming-algorithm.webp
+/assets/images/teaser/teaser-programming-others.png: /assets/images/teaser/teaser-programming-others.webp
+/assets/images/teaser/teaser-dev-git.png: /assets/images/teaser/teaser-dev-git.webp
+/assets/images/teaser/teaser-dev-docker.png: /assets/images/teaser/teaser-dev-docker.webp
+/assets/images/teaser/teaser-cs-linux.png: /assets/images/teaser/teaser-cs-linux.webp
+/assets/images/teaser/teaser-math-linear_algebra.png: /assets/images/teaser/teaser-math-linear_algebra.webp
+/assets/images/teaser/teaser-math-math_for_ml.png: /assets/images/teaser/teaser-math-math_for_ml.webp
+/assets/images/teaser/teaser-robotics-autonomous_vehicle.png: /assets/images/teaser/teaser-robotics-autonomous_vehicle.webp
+/assets/images/teaser/teaser-robotics-engineering.png: /assets/images/teaser/teaser-robotics-engineering.webp
+/assets/images/teaser/teaser-robotics-perception.png: /assets/images/teaser/teaser-robotics-perception.webp
+/assets/images/teaser/teaser-robotics-ros.png: /assets/images/teaser/teaser-robotics-ros.webp
+/assets/images/teaser/teaser_hpe.jpg: /assets/images/teaser/teaser_hpe.webp

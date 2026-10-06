@@ -3,43 +3,19 @@ layout: default
 ---
 
 <div class="layout-default">
-	<div id="search-content" class="content-default">
-		<div class="content-wrap">
-			<div class="search-bar">
-				<i class="fa fa-search" aria-hidden="true"></i>
-				<input id="search-input" type="text" placeholder="Search..." />
-			</div>
-	
-			<ul id="results-container"></ul>
-		</div>
-	</div>
+    <div id="search-content" class="content-default">
+        <div class="content-wrap">
+            <h1 class="sr-only">블로그 글 검색</h1>
+            <form class="search-bar" role="search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <label class="sr-only" for="search-input">검색어</label>
+                <input id="search-input" type="search" name="q" placeholder="Search..." autocomplete="off" spellcheck="false" aria-describedby="search-status" aria-controls="results-container" data-search-index="{{ '/search.json' | relative_url }}">
+            </form>
+            <p id="search-status" role="status" aria-live="polite">제목, 태그, 카테고리로 글을 찾아보세요.</p>
+            <ul id="results-container" aria-label="검색 결과"></ul>
+            <noscript>검색하려면 JavaScript를 활성화하거나 <a href="{{ '/category/recent_posts/' | relative_url }}">전체 글 목록</a>을 이용해 주세요.</noscript>
+        </div>
+    </div>
 </div>
 
-<!-- Script pointing to jekyll-search.js -->
-<script src="/assets/js/jekyll-search.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-	SimpleJekyllSearch({
-		searchInput: document.getElementById('search-input'),
-		resultsContainer: document.getElementById('results-container'),
-		json: '/search.json',
-		searchResultTemplate: `
-			<a href="{url}" id="default-single-default" class="post-link">
-				<div class="list-element-teaser">
-					<img src="{teaser}" alt="{title}">
-				</div>
-
-				<div class="list-element-text">
-					<div class="list-element-category">{categories}</div>
-					<div class="list-element-title">{title}</div>
-					<div class="list-element-date">{date}</div>
-					<div class="list-element-excerpt">{excerpt}</div>
-				</div>
-			</a>
-		`,
-		noResultsText: 'No results found',
-		limit: 10000,
-		fuzzy: false,
-		exclude: ['Welcome']
-	});
-</script>
+<script src="{{ '/assets/js/search.js' | relative_url }}" defer></script>

@@ -1,0 +1,188 @@
+---
+layout: default
+title: 대표 이미지 모음
+permalink: /image-credits/
+noindex: true
+sitemap: false
+---
+
+<div id="cover-gallery" class="layout-default">
+    <header class="cover-gallery-heading">
+        <p class="cover-gallery-eyebrow">BLOG IMAGE COLLECTION</p>
+        <h1>대표 이미지 모음</h1>
+        <p class="cover-gallery-description">블로그의 주제별 대표 이미지 {{ site.data.cover_images | size }}장과 사진 출처를 한곳에 모았습니다.</p>
+    </header>
+
+    <div class="cover-gallery-grid">
+        {% for cover in site.data.cover_images %}
+        <article class="cover-card" aria-labelledby="cover-title-{{ forloop.index }}">
+            <a class="cover-preview" href="{{ cover.image | relative_url | escape }}" target="_blank" rel="noopener noreferrer" aria-label="{{ cover.title | escape }} 이미지 크게 보기 (새 창)">
+                <img src="{{ cover.image | relative_url | escape }}" alt="{{ cover.description | escape }}" width="{{ cover.width | default: 1200 }}" height="{{ cover.height | default: 675 }}" loading="lazy" decoding="async">
+            </a>
+            <div class="cover-card-body">
+                <p class="cover-card-group">{{ cover.group | escape }}</p>
+                <h2 class="cover-card-title" id="cover-title-{{ forloop.index }}">{{ cover.title | escape }}</h2>
+                <p class="cover-card-credit"><span>{{ cover.credit | default: cover.author | escape }}</span></p>
+                <div class="cover-card-links">
+                    <a href="{{ cover.source_url | escape }}" target="_blank" rel="noopener noreferrer" aria-label="{{ cover.title | escape }} 사진 출처 보기 (새 창)">사진 출처 <span aria-hidden="true">↗</span></a>
+                    <a href="{{ cover.image | relative_url | escape }}" target="_blank" rel="noopener noreferrer" aria-label="{{ cover.title | escape }} 이미지 보기 (새 창)">이미지 보기 <span aria-hidden="true">↗</span></a>
+                    {% if cover.license_url %}<a class="cover-license" href="{{ cover.license_url | escape }}" target="_blank" rel="noopener noreferrer" aria-label="{{ cover.title | escape }} 사진 라이선스 (새 창)">라이선스</a>{% endif %}
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+
+    <p class="cover-gallery-note">이미지는 블로그의 카드 비율에 맞게 잘라 사용했습니다. 제작자의 원본 이미지와 이용 조건은 각 이미지의 출처에서 확인할 수 있습니다.</p>
+</div>
+
+<style>
+    #cover-gallery {
+        display: block;
+        width: 100%;
+        max-width: 1180px;
+        padding: 70px 36px 80px;
+        margin-right: auto;
+        margin-left: auto;
+        color: #333;
+    }
+    #cover-gallery .cover-gallery-heading {
+        max-width: 750px;
+        margin-bottom: 38px;
+    }
+    #cover-gallery .cover-gallery-eyebrow {
+        margin: 0 0 13px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.7px;
+        color: #3464e0;
+    }
+    #cover-gallery h1 {
+        margin: 0 0 18px;
+        font-family: 'yg-jalnan', sans-serif;
+        font-size: 32px;
+        line-height: 1.5;
+        letter-spacing: -1px;
+    }
+    #cover-gallery .cover-gallery-description {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.9;
+        color: #636363;
+        word-break: keep-all;
+    }
+    #cover-gallery .cover-gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 26px 22px;
+    }
+    #cover-gallery .cover-card {
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid #e6e6e6;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 3px 14px #33333305;
+    }
+    #cover-gallery .cover-preview {
+        display: block;
+        overflow: hidden;
+        aspect-ratio: 16 / 9;
+        background: #f6f8fa;
+    }
+    #cover-gallery .cover-preview img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        object-fit: cover;
+        transition: transform .2s ease;
+    }
+    #cover-gallery .cover-preview:hover img {
+        transform: scale(1.025);
+    }
+    #cover-gallery .cover-card-body {
+        padding: 19px 18px 17px;
+    }
+    #cover-gallery .cover-card-group {
+        margin: 0 0 9px;
+        color: #3464e0;
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 1.6;
+    }
+    #cover-gallery .cover-card-title {
+        margin: 0 0 11px;
+        padding: 0;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.5;
+        letter-spacing: -.3px;
+        overflow-wrap: anywhere;
+    }
+    #cover-gallery .cover-card-credit {
+        margin: 0;
+        font-size: 11px;
+        line-height: 1.8;
+        color: #777;
+        overflow-wrap: anywhere;
+    }
+    #cover-gallery .cover-card-credit span {
+        color: #555;
+    }
+    #cover-gallery .cover-card-links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 14px;
+        margin-top: 17px;
+        padding-top: 13px;
+        border-top: 1px solid #eee;
+        font-size: 11px;
+        line-height: 1.8;
+    }
+    #cover-gallery .cover-card-links a {
+        color: #3464e0;
+        text-underline-offset: 3px;
+    }
+    #cover-gallery .cover-card-links a:hover {
+        text-decoration: underline;
+    }
+    #cover-gallery .cover-card-links .cover-license {
+        margin-left: auto;
+        font-size: 10px;
+        color: #777;
+    }
+    #cover-gallery a:focus-visible {
+        outline: 3px solid #3464e0;
+        outline-offset: -3px;
+    }
+    #cover-gallery .cover-card-links a:focus-visible {
+        outline-offset: 3px;
+    }
+    #cover-gallery .cover-gallery-note {
+        margin: 35px 0 0;
+        padding-top: 21px;
+        border-top: 1px solid #e6e6e6;
+        color: #777;
+        font-size: 11px;
+        line-height: 1.9;
+        word-break: keep-all;
+    }
+    @media (max-width: 1000px) {
+        #cover-gallery .cover-gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+        #cover-gallery { padding: 42px 24px 55px; }
+        #cover-gallery h1 { font-size: 26px; }
+        #cover-gallery .cover-gallery-description { font-size: 12px; }
+        #cover-gallery .cover-gallery-heading { margin-bottom: 28px; }
+        #cover-gallery .cover-gallery-grid { grid-template-columns: minmax(0, 1fr); gap: 23px; }
+        #cover-gallery .cover-card-body { padding: 19px; }
+        #cover-gallery .cover-card-title { font-size: 19px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        #cover-gallery .cover-preview img { transition: none; }
+    }
+</style>

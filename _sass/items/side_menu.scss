@@ -1,18 +1,21 @@
 #sidebar {
 	box-sizing: border-box;
 	position: fixed; // sticy하면 본문이 그만큼 옆으로 퍼짐
-	height: 100vh;
+	height: calc(100vh - 55px);
+	height: calc(100dvh - 55px);
 	background-color: white;
 	width: $sidebar-width;
 	margin: 0;
 	overflow-y: auto;
-	z-index: 5;
-	top: 40px;
+	z-index: 998;
+	top: 55px;
 	bottom: 0;
-	left: -$sidebar-width;
+	left: 0;
 	border-right: 1px solid transparent;
-	transition: all .3s cubic-bezier(.215,.61,.355,1);
-	transform: translate3d(0,0,0);
+	visibility: hidden;
+	pointer-events: none;
+	transition: transform .2s cubic-bezier(.215,.61,.355,1), visibility .2s;
+	transform: translateX(-100%);
 }
 
 #sidebar::-webkit-scrollbar{
@@ -187,14 +190,17 @@
 }
 
 #sidebar.open {
-	left: 0;
+	transform: translateX(0);
+	visibility: visible;
+	pointer-events: auto;
 	border-color: #c2c2c2;
-	transition: all .2s cubic-bezier(.215,.61,.355,1);
 }
 
 @media screen and (max-width: $max-width-tablet) {
 	#sidebar {
 		width: $sidebar-width-mobile;
-		left: -$sidebar-width-mobile;
+		top: 61px;
+		height: calc(100vh - 61px);
+		height: calc(100dvh - 61px);
 	}
 }

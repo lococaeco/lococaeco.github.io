@@ -1,0 +1,28 @@
+---
+layout: null
+sitemap: false
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{% for post in site.posts %}{% unless post.sitemap == false or post.noindex == true %}
+  <url>
+    <loc>{{ post.url | absolute_url | xml_escape }}</loc>
+    <lastmod>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</lastmod>
+  </url>
+{% endunless %}{% endfor %}
+{% for item in site.pages %}
+  {% assign include_page = false %}
+  {% if item.name contains '.html' %}{% assign include_page = true %}{% endif %}
+  {% if item.sitemap == false or item.noindex == true %}{% assign include_page = false %}{% endif %}
+  {% if item.category_key %}
+    {% assign category_posts = site.categories[item.category_key] %}
+    {% unless category_posts.size > 0 %}{% assign include_page = false %}{% endunless %}
+  {% endif %}
+  {% if include_page %}
+  <url>
+    <loc>{{ item.url | absolute_url | xml_escape }}</loc>
+    {% if item.last_modified_at %}<lastmod>{{ item.last_modified_at | date_to_xmlschema }}</lastmod>{% endif %}
+  </url>
+  {% endif %}
+{% endfor %}
+</urlset>

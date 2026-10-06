@@ -1,4 +1,4 @@
-<div id="footer">
+<footer id="footer">
     <div class="footer-main">
         <div class="footer-about">
             <div class="footer-name">
@@ -11,24 +11,24 @@
 
             <div class="footer-contacts">
                 <a class="contact" href="https://github.com/lococaeco" >
-                    <span class="contact-icon"><i class="fa-brands fa-github"></i></span>
+                    <span class="contact-icon"><i class="fa-brands fa-github" aria-hidden="true"></i></span>
                     <span class="contact-title">GitHub</span>
                 </a>
     
                 <a class="contact" href="mailto:sangwoobang@unist.ac.kr">
-                    <span class="contact-icon"><i class="fa-regular fa-envelope"></i></span>
+                    <span class="contact-icon"><i class="fa-regular fa-envelope" aria-hidden="true"></i></span>
                     <span class="contact-title">e-mail</span>
                 </a>
             </div>
         </div>
 
-        <div class="footer-pages">
-            <a href="/about">About</a>
-        </div>
+        <nav class="footer-pages" aria-label="푸터 페이지">
+            <a href="{{ '/about' | relative_url }}">About</a>
+        </nav>
     
     </div>
     
     <div class="copyright">
         <span>copyright by lococaeco</span>
     </div>
-</div>
+</footer>

@@ -6,6 +6,11 @@ description : "LLM & Reinforcement Learning 연구 블로그"
 url : "https://lococaeco.github.io"
 repository : "https://github.com/lococaeco/lococaeco.github.io"
 timezone: Asia/Seoul
+ads_enabled: true
+
+# Serve a compact stylesheet; canonical URLs remain unchanged.
+sass:
+  style: compressed
 
 
 # Reading Files
@@ -13,6 +18,10 @@ include:
   - .htaccess
   - _pages
 exclude:
+  - tools
+  - .blog-studio
+  - blog-studio.sh
+  - blog-studio.cmd
   - "*.sublime-project"
   - "*.sublime-workspace"
   - vendor
@@ -27,6 +36,8 @@ exclude:
   - CHANGELOG
   - config
   - Gemfile
+  - Gemfile.lock
+  - minimal-mistakes-jekyll.gemspec
   - Gruntfile.js
   - gulpfile.js
   - LICENSE
@@ -36,6 +47,7 @@ exclude:
   - package-lock.json
   - Rakefile
   - README
+  - README.md
   - scripts
   - assets/notion
   - npm-cache
@@ -85,138 +97,157 @@ defaults:
     scope:
       path: "_pages/categories/category_ai.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-ai-machine_learning.png"
+      title_bg: "/assets/images/teaser/teaser-ai-machine_learning.webp"
 
   # AI / LLM
   -
     scope:
       path: "_posts/ai/llm/*"
     values:
-      teaser: "/assets/images/teaser/teaser-ai-machine_learning.png"
+      teaser: "/assets/images/teaser/teaser-ai-machine_learning.webp"
   -
     scope:
       path: "_pages/categories/category_ai_llm.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-ai-machine_learning.png"
+      title_bg: "/assets/images/teaser/teaser-ai-machine_learning.webp"
 
   # AI / Reinforcement Learning
   -
     scope:
       path: "_posts/ai/reinforcement_learning/*"
     values:
-      teaser: "/assets/images/teaser/teaser-ai-reinforcement_learning.png"
+      teaser: "/assets/images/teaser/teaser-ai-reinforcement_learning.webp"
   -
     scope:
       path: "_pages/categories/category_ai_reinforcementlearning.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-ai-reinforcement_learning.png"
+      title_bg: "/assets/images/teaser/teaser-ai-reinforcement_learning.webp"
 
   # AI / Deep Learning
   -
     scope:
       path: "_posts/ai/deep_learning/*"
     values:
-      teaser: "/assets/images/teaser/teaser-ai-machine_learning.png"
+      teaser: "/assets/images/teaser/teaser-ai-machine_learning.webp"
   -
     scope:
       path: "_pages/categories/category_ai_deeplearning.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-ai-machine_learning.png"
+      title_bg: "/assets/images/teaser/teaser-ai-machine_learning.webp"
 
   # AI / Paper Review
   -
     scope:
       path: "_posts/ai/paper_review/*"
     values:
-      teaser: "/assets/images/teaser/teaser-ai-machine_learning.png"
+      teaser: "/assets/images/teaser/teaser-ai-machine_learning.webp"
   -
     scope:
       path: "_pages/categories/category_ai_paperreview.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-ai-machine_learning.png"
+      title_bg: "/assets/images/teaser/teaser-ai-machine_learning.webp"
 
   # === Dev ===
   -
     scope:
       path: "_pages/categories/category_dev.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-dev-git.png"
+      title_bg: "/assets/images/teaser/teaser-dev-git.webp"
 
   # Dev / Python
   -
     scope:
       path: "_posts/dev/python/*"
     values:
-      teaser: "/assets/images/teaser/teaser-dev-git.png"
+      teaser: "/assets/images/teaser/teaser-programming-python.webp"
   -
     scope:
       path: "_pages/categories/category_dev_python.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-dev-git.png"
+      title_bg: "/assets/images/teaser/teaser-programming-python.webp"
 
   # Dev / Git
   -
     scope:
       path: "_posts/dev/git/*"
     values:
-      teaser: "/assets/images/teaser/teaser-dev-git.png"
+      teaser: "/assets/images/teaser/teaser-dev-git.webp"
   -
     scope:
       path: "_pages/categories/category_dev_git.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-dev-git.png"
+      title_bg: "/assets/images/teaser/teaser-dev-git.webp"
+
+  # Dev / Markdown
+  -
+    scope:
+      path: "_posts/dev/markdown/*"
+    values:
+      teaser: "/assets/images/teaser/teaser-programming-others.webp"
+  -
+    scope:
+      path: "_pages/categories/category_dev_markdown.html"
+    values:
+      title_bg: "/assets/images/teaser/teaser-programming-others.webp"
 
   # Dev / Docker
   -
     scope:
       path: "_posts/dev/docker/*"
     values:
-      teaser: "/assets/images/teaser/teaser-dev-docker.png"
+      teaser: "/assets/images/teaser/teaser-dev-docker.webp"
   -
     scope:
       path: "_pages/categories/category_dev_docker.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-dev-docker.png"
+      title_bg: "/assets/images/teaser/teaser-dev-docker.webp"
 
   # Dev / Linux
   -
     scope:
       path: "_posts/dev/linux/*"
     values:
-      teaser: "/assets/images/teaser/teaser-dev-git.png"
+      teaser: "/assets/images/teaser/teaser-cs-linux.webp"
   -
     scope:
       path: "_pages/categories/category_dev_linux.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-dev-git.png"
+      title_bg: "/assets/images/teaser/teaser-cs-linux.webp"
 
   # === Math ===
   -
     scope:
       path: "_pages/categories/category_math.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-math-linear_algebra.png"
+      title_bg: "/assets/images/teaser/teaser-math-linear_algebra.webp"
 
   # Math / Linear Algebra
   -
     scope:
       path: "_posts/math/linear_algebra/*"
     values:
-      teaser: "/assets/images/teaser/teaser-math-linear_algebra.png"
+      teaser: "/assets/images/teaser/teaser-math-linear_algebra.webp"
   -
     scope:
       path: "_pages/categories/category_math_linearalgebra.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-math-linear_algebra.png"
+      title_bg: "/assets/images/teaser/teaser-math-linear_algebra.webp"
 
   # Math / Probability & Statistics
   -
     scope:
       path: "_posts/math/probability_statistics/*"
     values:
-      teaser: "/assets/images/teaser/teaser-math-linear_algebra.png"
+      teaser: "/assets/images/teaser/teaser-math-math_for_ml.webp"
   -
     scope:
       path: "_pages/categories/category_math_probabilitystatistics.html"
     values:
-      title_bg: "/assets/images/lv2_bg/bg-math-linear_algebra.png"
+      title_bg: "/assets/images/teaser/teaser-math-math_for_ml.webp"
+
+  # This article is about isolated containers, so give it the Docker cover.
+  -
+    scope:
+      path: "_posts/ai/llm/2026-03-01-openclaw-setting.md"
+    values:
+      teaser: "/assets/images/teaser/teaser-dev-docker.webp"

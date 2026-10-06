@@ -34,3 +34,9 @@ _site
 
 # Local backups
 *.bak
+
+# Blog Studio: private drafts, history, uploads and Python environment
+.blog-studio/
+tools/blog-studio/.venv/
+__pycache__/
+*.pyc
