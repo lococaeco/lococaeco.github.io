@@ -67,6 +67,9 @@ class RepositoryCase(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.repo = Path(self.temp.name) / "blog"
         self.repo.mkdir()
+        # Windows temp paths may use an 8.3 alias (RUNNER~1); Studio uses the
+        # resolved long path. Keep fixture paths in the same canonical form.
+        self.repo = self.repo.resolve()
         self.git("init", "-b", "main")
         self.git("config", "user.name", "Studio Test")
         self.git("config", "user.email", "studio-test@example.invalid")
@@ -339,8 +342,9 @@ class GitPublicationTests(RepositoryCase):
     def test_index_install_failure_preserves_already_committed_content(self):
         d = self.update(self.open(), body="커밋 완료 후 인덱스 실패")
         replace = os.replace
+        index_path = (self.repo / ".git/index").resolve()
         def fail_index_replace(source, target):
-            if Path(target) == self.repo / ".git/index":
+            if Path(target).resolve() == index_path:
                 raise OSError("Simulated index replacement failure")
             return replace(source, target)
         head = self.git("rev-parse", "HEAD")

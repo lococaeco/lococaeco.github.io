@@ -24,7 +24,9 @@ class DesktopTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory(prefix='studio-desktop-test-')
         self.addCleanup(self.temporary.cleanup)
-        self.root = Path(self.temporary.name)
+        # Windows runners can return an 8.3 TEMP alias (e.g. RUNNER~1).
+        # Compare canonical repository locations, not equivalent spellings.
+        self.root = Path(self.temporary.name).resolve()
         self.repo = self.make_repository('blog')
         self.processes = []
         self.addCleanup(self.stop_servers)
@@ -206,7 +208,7 @@ class DesktopTests(unittest.TestCase):
         desktop.save_preferences(self.repo, 4310, path)
         desktop.save_preferences(other, 47221, path)
         preferences = desktop.load_preferences(path)
-        self.assertEqual(preferences['last_repo'], str(other))
+        self.assertEqual(Path(preferences['last_repo']).resolve(), other.resolve())
         self.assertEqual(desktop.preferred_port(self.repo, preferences=preferences), 4310)
         self.assertEqual(desktop.preferred_port(other, preferences=preferences), 47221)
         self.assertEqual(desktop.preferred_port(other, explicit=0, preferences=preferences), 0)
@@ -234,7 +236,7 @@ class DesktopTests(unittest.TestCase):
             self.assertTrue(ready.exists(), 'Launcher did not publish its ready file')
             metadata = json.loads(ready.read_text('utf-8'))
             self.assertEqual(set(metadata), {'url', 'repo'})
-            self.assertEqual(metadata['repo'], str(self.repo))
+            self.assertEqual(Path(metadata['repo']).resolve(), self.repo.resolve())
             self.assertTrue(metadata['url'].startswith('http://127.0.0.1:'))
             with urlopen(metadata['url'] + '/api/bootstrap', timeout=5) as response:
                 self.assertEqual(json.load(response)['site']['title'], 'Desktop fixture')
