@@ -1,6 +1,7 @@
 """Launcher regression tests using disposable, non-Git Jekyll repositories."""
 from __future__ import annotations
 
+import io
 import json
 import os
 from pathlib import Path
@@ -248,6 +249,53 @@ class DesktopTests(unittest.TestCase):
             if child.poll() is None:
                 child.terminate()
                 child.communicate(timeout=10)
+
+    def check_headless_with_cp1252_stream(self, stream_type=io.TextIOWrapper):
+        repo = self.make_repository('내 블로그')
+        output_bytes, error_bytes = io.BytesIO(), io.BytesIO()
+        output = stream_type(output_bytes, encoding='cp1252', errors='strict')
+        errors = stream_type(error_bytes, encoding='cp1252', errors='strict')
+        old_handlers = list(desktop.LOGGER.handlers)
+        ready = self.root / 'ready.json'
+        real_ready = desktop.write_ready_file
+        def check_http(path, process):
+            self.assertEqual(self.request(process)['site']['title'], 'Desktop fixture')
+            real_ready(path, process)
+        try:
+            with patch.object(sys, 'stdout', output), patch.object(sys, 'stderr', errors), \
+                    patch.object(desktop, 'config_directory', return_value=self.root / 'profile'), \
+                    patch.object(desktop, 'write_ready_file', side_effect=check_http) as signal_ready:
+                code = desktop.main(['--headless', '--repo', str(repo), '--no-browser', '--port', '0',
+                                     '--ready-file', str(ready), '--exit-after', '0'])
+                output.flush()
+                errors.flush()
+            self.assertEqual(code, 0, error_bytes.getvalue().decode('utf-8', errors='replace'))
+            signal_ready.assert_called_once()
+            # The protocol itself is ASCII-safe, independent of pipe encoding.
+            protocol = [line for line in output_bytes.getvalue().decode('ascii').splitlines()
+                        if line.startswith('{"url"')]
+            self.assertEqual(len(protocol), 1)
+            self.assertIn('\\ub0b4', protocol[0])
+            metadata = json.loads(protocol[0])
+            self.assertEqual(Path(metadata['repo']).resolve(), repo.resolve())
+            self.assertFalse(ready.exists())
+            return output.encoding, errors.encoding
+        finally:
+            for handler in list(desktop.LOGGER.handlers):
+                if handler not in old_handlers:
+                    desktop.LOGGER.removeHandler(handler)
+                    handler.close()
+            output.close()
+            errors.close()
+
+    def test_headless_korean_path_reconfigures_windows_cp1252_pipes(self):
+        self.assertEqual(self.check_headless_with_cp1252_stream(), ('utf-8', 'utf-8'))
+
+    def test_headless_json_survives_non_reconfigurable_windows_pipe(self):
+        class FixedEncodingStream(io.TextIOWrapper):
+            def reconfigure(self, **_):
+                raise OSError('Captured pipe cannot be reconfigured')
+        self.assertEqual(self.check_headless_with_cp1252_stream(FixedEncodingStream), ('cp1252', 'cp1252'))
 
 
 if __name__ == '__main__':

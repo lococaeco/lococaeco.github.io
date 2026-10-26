@@ -159,6 +159,16 @@ def configure_logging():
         sys.stdout = LogStream(logging.INFO)
     if sys.stderr is None:
         sys.stderr = LogStream(logging.ERROR)
+    # A windowed Windows executable may inherit a cp1252 pipe even when the
+    # source interpreter honors PYTHONUTF8. Keep diagnostics safe for paths
+    # containing Korean characters; custom/captured streams may not support it.
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, 'reconfigure', None)
+        if callable(reconfigure):
+            try:
+                reconfigure(encoding='utf-8', errors='backslashreplace')
+            except (OSError, ValueError, TypeError):
+                pass
     return path
 
 
@@ -282,7 +292,8 @@ def run_headless(args):
         process.start(repo, preferred_port(repo, args.port, preferences))
         remember_process(process)
         write_ready_file(args.ready_file, process)
-        print(json.dumps({'url': process.url, 'repo': str(process.repo)}, ensure_ascii=False), flush=True)
+        # Machine-readable output must also work with non-reconfigurable pipes.
+        print(json.dumps({'url': process.url, 'repo': str(process.repo)}, ensure_ascii=True), flush=True)
         if not args.no_browser:
             try:
                 if not open_browser(process.url):
