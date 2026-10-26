@@ -4,10 +4,58 @@
 카테고리를 고르고, 이미지를 붙여넣고, 글을 확인한 뒤 저장하거나 GitHub로
 전송할 수 있습니다. 기존 Jekyll 블로그와 Markdown 파일을 그대로 사용합니다.
 
-## 시작하기
+## 실행 파일 하나로 시작하기
+
+Python을 설치하지 않아도 실행할 수 있는 데스크톱 버전을 제공합니다.
+
+| 운영체제 | 실행 파일 | 사용 방법 |
+| --- | --- | --- |
+| Windows 10/11, 64비트 | `BlogStudio.exe` | 더블클릭 |
+| Ubuntu 22.04 이상, x86_64 | `BlogStudio-linux-x86_64` | 속성에서 실행 권한을 허용한 뒤 더블클릭 |
+
+Ubuntu용은 Python과 Tcl/Tk를 포함한 **단일 실행 파일**입니다. AppImage나 FUSE
+설치가 필요하지 않습니다. ARM 컴퓨터와 macOS용 파일은 제공하지 않습니다.
+
+1. [GitHub Actions](https://github.com/lococaeco/lococaeco.github.io/actions)에서
+   **Blog Studio desktop builds**의 성공한 실행을 엽니다.
+2. 아래 **Artifacts**에서 운영체제에 맞는 파일을 내려받고 ZIP을 풉니다.
+   GitHub 로그인이 필요하며 빌드 결과는 30일 동안 보관됩니다.
+3. 위 표의 실행 파일 하나를 원하는 폴더로 옮겨 실행합니다. 함께 있는 SHA-256과
+   빌드 정보 파일은 검증용이며 실행에 필요하지 않습니다.
+4. 시작 창에서 `_config.yml`과 `_posts`가 있는 **블로그 폴더**를 선택하고
+   **작성 시작**을 누릅니다. 기본 브라우저에 편집기가 열립니다.
+5. 다음 실행부터는 선택한 폴더와 포트를 기억합니다. 종료 전 편집 화면에
+   **모든 변경 저장됨**이 표시되는지 확인한 뒤 시작 창에서 종료하세요.
+
+실행 파일에는 편집기만 들어 있고 개인 글·초안·GitHub 인증은 들어 있지 않습니다.
+블로그 폴더는 별도로 필요합니다. 다른 컴퓨터에서는 먼저 블로그 저장소를 복제한
+뒤 그 폴더를 선택하세요. 글과 초안은 선택한 폴더의 기존 `_posts`와
+`.blog-studio`에 저장되므로 실행 파일을 교체하거나 이동해도 지워지지 않습니다.
+
+**GitHub 전송에는 Git 설치와 해당 컴퓨터의 GitHub 인증이 여전히 필요합니다.**
+Git이 없어도 작성·임시저장·파일 저장은 사용할 수 있습니다. GitHub CLI를
+사용한다면 로그인 후 `gh auth setup-git --hostname github.com`으로 연결합니다.
+실행 파일이 다른 컴퓨터의 로그인까지 가져오지는 않습니다.
+
+Windows 실행 파일에는 유료 코드 서명이 적용되어 있지 않아 SmartScreen 경고가
+나타날 수 있습니다. 본인 저장소의 성공한 빌드 결과인지 확인하세요.
+
+같은 블로그를 여러 앱에서 동시에 열면 두 번째 앱은 시작을 막습니다. 사용 중인
+포트가 다른 프로그램에 점유돼 있으면 별도 포트로 열고 시작 창에 알려줍니다.
+이 경우 이전 포트의 브라우저 복구 기록과 새 편집 화면의 기록이 다를 수 있지만,
+서버에 저장된 초안은 그대로 유지됩니다.
+
+최근 폴더와 실행 로그는 Ubuntu의 `~/.config/blog-studio/`, Windows의
+`%LOCALAPPDATA%\Blog Studio\`에 저장합니다. `XDG_CONFIG_HOME`을 설정했다면
+Ubuntu에서는 해당 폴더를 사용합니다. 서버는 이 컴퓨터의 `127.0.0.1`에서만 열립니다.
+
+## 소스 코드로 시작하기
 
 Python **3.10 이상**이 필요합니다. Git 커밋과 GitHub 전송에는 Git도 필요합니다.
 Node.js, Ruby, Jekyll을 설치하지 않아도 편집기는 실행됩니다.
+
+이 절의 Python 설치 안내는 `.sh`/`.cmd`로 소스 코드를 실행하는 경우에만 해당합니다.
+위의 데스크톱 실행 파일에는 Python이 포함되어 있습니다.
 
 **Linux / macOS** — 저장소에서 실행합니다.
 
@@ -148,10 +196,34 @@ DOMPurify 3.4.16을 사용합니다. 의존성 업데이트 시 수식과 기존
 다시 검증해야 합니다. 원본 배포 주소, 버전, 라이선스와 파일 해시는
 [vendor 안내](static/vendor/README.md)와 [manifest](static/vendor/manifest.json)에 있습니다.
 
-Linux에서 가상환경 생성·의존성 설치·다른 디렉터리에서 시작·HTTP 응답·종료를
-검증했습니다. Windows 실행 파일은 포함되어 있으나 Windows에서 실제 실행 검증은
-하지 않았습니다. Ubuntu/Debian에서 `venv` 생성 오류가 나면
-`sudo apt install python3-venv` 후 다시 실행하세요.
+Ubuntu/Debian에서 소스 실행용 `venv` 생성 오류가 나면
+`sudo apt install python3-venv` 후 다시 실행하세요. 데스크톱 실행 파일에는
+이 과정이 필요하지 않습니다.
+
+## 실행 파일 직접 빌드하기
+
+Windows 파일은 Windows에서, Ubuntu 파일은 Ubuntu 22.04에서 각각 빌드합니다.
+더 새로운 Linux에서 만든 파일은 더 오래된 Ubuntu에서 실행되지 않을 수 있습니다.
+빌드용 Python 3.12에 Tk가 포함되어 있어야 합니다. Ubuntu 개발 환경에서는
+`python3-tk`가 필요하며, 사용자가 내려받는 실행 파일에는 Tk도 들어 있습니다.
+
+```sh
+python -m pip install -r tools/blog-studio/requirements-build.txt
+python tools/blog-studio/build_desktop.py
+python tools/blog-studio/tests/package_smoke.py tools/blog-studio/dist/BlogStudio.exe
+```
+
+마지막 명령은 Windows용입니다. Ubuntu에서는 실행 파일 이름을
+`BlogStudio-linux-x86_64`로 바꿉니다. 화면이 없는 CI 환경에서는 `xvfb-run -a`를
+앞에 붙입니다. `dist/`와 `.build/`는 Git·블로그 게시 대상에 포함되지 않습니다.
+
+**Blog Studio desktop builds** 워크플로는 두 운영체제에서 백엔드·런처 검사 후
+실제 실행 파일을 빌드하고 다시 실행해 검사합니다. 패키지 검사는 Python과 Git을
+찾을 수 없도록 PATH를 비운 상태에서 GUI, 편집기 리소스, 한글·공백 경로,
+글과 초안 저장, 종료 후 재실행 복구를 검증합니다. 모든 검사는 임시 블로그만
+사용합니다. Windows 개인 PC의 보안 정책·화면 배율까지 보장하는 검사는 아닙니다.
+
+## 개발용 검사
 
 백엔드 검증은 전용 환경 준비 후 아래 명령으로 실행할 수 있습니다.
 

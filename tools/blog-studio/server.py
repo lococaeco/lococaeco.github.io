@@ -12,13 +12,16 @@ import copy
 import datetime as dt
 import hashlib
 import json
+import logging
 import mimetypes
 import os
 from pathlib import Path, PurePosixPath
 import re
 import secrets
 import shutil
+import socket
 import subprocess
+import sys
 import tempfile
 import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -29,6 +32,12 @@ import webbrowser
 import yaml
 
 HERE = Path(__file__).resolve().parent
+# Also support importlib loading from test runners outside this directory.
+if str(HERE) not in sys.path:
+    sys.path.insert(0, str(HERE))
+from runtime import RepositoryLock, RepositoryInUseError, run_external, external_program_environment
+
+logger = logging.getLogger('blog_studio.server')
 KST = dt.timezone(dt.timedelta(hours=9))
 MAX_BODY = 4 * 1024 * 1024
 MAX_IMAGE = 12 * 1024 * 1024
@@ -160,8 +169,8 @@ class Studio:
         if env:
             settings.update(env)
         try:
-            p = subprocess.run(['git', '-C', str(self.repo), *args], capture_output=True,
-                               encoding='utf-8', errors='replace', timeout=timeout, env=settings)
+            p = run_external(['git', '-C', str(self.repo), *args], capture_output=True,
+                             encoding='utf-8', errors='replace', timeout=timeout, env=settings)
         except FileNotFoundError as e:
             raise StudioError('Git이 설치되어 있지 않습니다. 파일 저장은 계속 사용할 수 있습니다.') from e
         except subprocess.TimeoutExpired as e:
@@ -684,11 +693,48 @@ class Studio:
 
 
 class StudioHTTPServer(ThreadingHTTPServer):
-    daemon_threads = True
+    # server_close waits for saved files and in-flight Git operations to finish.
+    daemon_threads = False
+    block_on_close = True
+    allow_reuse_port = False
     def __init__(self, repo, port):
-        self.studio = Studio(repo)
-        self.token = secrets.token_urlsafe(32)
-        super().__init__(('127.0.0.1', port), Handler)
+        repo = Path(repo).resolve()
+        if not (repo / '_config.yml').is_file() or not (repo / '_posts').is_dir():
+            raise StudioError('Jekyll 블로그 폴더를 선택해 주세요. _config.yml과 _posts가 필요합니다.')
+        self._repo_lock = RepositoryLock(repo)
+        self._close_lock = threading.Lock()
+        try:
+            self._repo_lock.acquire()
+        except RuntimeError as exc:
+            raise StudioError(str(exc), 409 if isinstance(exc, RepositoryInUseError) else 403) from exc
+        try:
+            self.studio = Studio(repo)
+            self.token = secrets.token_urlsafe(32)
+            super().__init__(('127.0.0.1', port), Handler)
+        except BaseException:
+            self._repo_lock.release()
+            raise
+
+    def server_bind(self):
+        if os.name == 'nt':
+            # Windows SO_REUSEADDR may attach a second app to an occupied port,
+            # causing its browser to reach another repository's server.
+            self.allow_reuse_address = False
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+        super().server_bind()
+
+    def get_request(self):
+        connection, address = super().get_request()
+        # Incomplete browser connections must not leave shutdown waiting forever.
+        connection.settimeout(10)
+        return connection, address
+
+    def server_close(self):
+        # Serialize duplicate stop requests: ThreadingMixIn removes its thread
+        # list before joining, so a second close must not release the lock early.
+        with self._close_lock:
+            super().server_close()
+            self._repo_lock.release()
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -696,7 +742,7 @@ class Handler(BaseHTTPRequestHandler):
     def log_message(self, fmt, *args):
         # No query strings, post contents, images or CSRF tokens in logs.
         if args and isinstance(args[0], str):
-            print(f'[Blog Studio] {self.command} {urlparse(self.path).path} {args[1] if len(args) > 1 else ""}')
+            logger.info('%s %s %s', self.command, urlparse(self.path).path, args[1] if len(args) > 1 else '')
 
     def _guard(self, mutate=False):
         port = self.server.server_port
@@ -739,7 +785,7 @@ class Handler(BaseHTTPRequestHandler):
         except (BrokenPipeError, ConnectionResetError):
             pass
         except Exception as e:
-            print(f'[Blog Studio] {type(e).__name__}: {e}')
+            logger.error('Request failed: %s', type(e).__name__)
             self._json({'error': '작업을 완료하지 못했습니다. 로컬 터미널의 오류를 확인해 주세요. 초안은 보존됩니다.'}, 500)
 
     def do_GET(self):
@@ -825,6 +871,7 @@ def create_server(repo: Path, port=0):
 
 
 def main():
+    logging.basicConfig(level=logging.INFO, format='%(message)s')
     parser = argparse.ArgumentParser(description='Blog Studio — 로컬 Jekyll 글쓰기 도구')
     parser.add_argument('--repo', type=Path, default=HERE.parent.parent)
     parser.add_argument('--port', type=int, default=4310)
@@ -835,13 +882,16 @@ def main():
     except (StudioError, OSError) as e:
         parser.exit(1, f'Blog Studio: {e}\n')
     url = f'http://127.0.0.1:{server.server_port}'
-    print(f'\n  Blog Studio  ·  {url}\n  블로그: {server.studio.repo}\n  종료: Ctrl+C\n', flush=True)
+    logger.info('\n  Blog Studio  ·  %s\n  블로그: %s\n  종료: Ctrl+C\n', url, server.studio.repo)
     if not args.no_browser:
-        threading.Timer(0.6, lambda: webbrowser.open(url)).start()
+        def open_browser():
+            with external_program_environment():
+                webbrowser.open(url)
+        threading.Timer(0.6, open_browser).start()
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        print('\nBlog Studio를 종료합니다. 초안은 로컬에 저장되어 있습니다.')
+        logger.info('\nBlog Studio를 종료합니다. 초안은 로컬에 저장되어 있습니다.')
     finally:
         server.server_close()
 

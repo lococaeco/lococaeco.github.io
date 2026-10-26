@@ -22,6 +22,8 @@ exclude:
   - .blog-studio
   - blog-studio.sh
   - blog-studio.cmd
+  - BlogStudio.exe
+  - BlogStudio-linux-x86_64
   - "*.sublime-project"
   - "*.sublime-workspace"
   - vendor

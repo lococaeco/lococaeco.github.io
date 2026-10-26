@@ -38,5 +38,9 @@ _site
 # Blog Studio: private drafts, history, uploads and Python environment
 .blog-studio/
 tools/blog-studio/.venv/
+tools/blog-studio/.build/
+tools/blog-studio/dist/
+/BlogStudio.exe
+/BlogStudio-linux-x86_64
 __pycache__/
 *.pyc

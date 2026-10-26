@@ -3,7 +3,11 @@
 이 저장소의 Jekyll 블로그를 브라우저에서 편하게 작성하는 로컬 편집기입니다.
 시각 편집, Markdown, 이미지 붙여넣기, 자동 저장, 이전 버전 복원을 지원합니다.
 
-Python 3.10 이상을 설치한 뒤 Linux/macOS에서는 아래 명령을 실행하세요.
+데스크톱 버전은 Windows의 `BlogStudio.exe`, Ubuntu의 `BlogStudio-linux-x86_64`
+파일 하나로 실행합니다. Python 설치 없이 시작 창에서 블로그 폴더를 선택하면
+됩니다. 다운로드·실행 방법은 [Blog Studio 사용 설명서](tools/blog-studio/README.md)를 확인하세요.
+
+소스 코드로 실행하려면 Python 3.10 이상을 설치한 뒤 Linux/macOS에서 아래 명령을 실행하세요.
 
 ```sh
 ./blog-studio.sh

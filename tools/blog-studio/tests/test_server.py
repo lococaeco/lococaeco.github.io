@@ -81,7 +81,7 @@ class RepositoryCase(unittest.TestCase):
         self.studio = server.Studio(self.repo)
 
     def git(self, *args):
-        return subprocess.run(["git", "-C", str(self.repo), *args], check=True, text=True, capture_output=True).stdout.strip()
+        return subprocess.run(["git", "-C", str(self.repo), *args], check=True, text=True, encoding="utf-8", capture_output=True).stdout.strip()
 
     def write(self, name, content):
         path = self.repo / name
@@ -89,7 +89,7 @@ class RepositoryCase(unittest.TestCase):
         if isinstance(content, bytes):
             path.write_bytes(content)
         else:
-            path.write_text(content, encoding="utf-8")
+            path.write_bytes(content.encode("utf-8"))
         return path
 
     def open(self):
@@ -117,13 +117,13 @@ class PreservationTests(RepositoryCase):
         d = self.update(d)
         self.assertEqual(self.studio.export(d["id"]), POST)
         self.publish(d)
-        self.assertEqual((self.repo / POST_PATH).read_text(), POST)
+        self.assertEqual((self.repo / POST_PATH).read_text(encoding="utf-8"), POST)
         self.assertEqual(self.git("status", "--porcelain"), "")
 
     def test_metadata_edit_retains_unmanaged_yaml_and_body(self):
         d = self.update(self.open(), title="변경한 제목: 테스트", excerpt="새 요약")
         result = self.publish(d)
-        rendered = (self.repo / POST_PATH).read_text()
+        rendered = (self.repo / POST_PATH).read_text(encoding="utf-8")
         before, _, body_before = server.split_post(POST)
         after, _, body_after = server.split_post(rendered)
         for key in ("custom", "last_modified_at", "categories", "published", "feature"):
@@ -142,7 +142,7 @@ class PreservationTests(RepositoryCase):
     def test_draft_save_does_not_touch_post_or_git(self):
         head = self.git("rev-parse", "HEAD")
         d = self.update(self.open(), body="아직 공개하면 안 되는 내용")
-        self.assertEqual((self.repo / POST_PATH).read_text(), POST)
+        self.assertEqual((self.repo / POST_PATH).read_text(encoding="utf-8"), POST)
         self.assertEqual(self.git("rev-parse", "HEAD"), head)
         self.assertEqual(self.git("status", "--porcelain"), "")
         self.assertEqual(self.studio.get_draft(d["id"])["body"], "아직 공개하면 안 되는 내용")
@@ -157,7 +157,7 @@ class PreservationTests(RepositoryCase):
         d = self.open()
         self.update(d, body="검토 이후 변경")
         self.assert_studio_error(lambda: self.publish(d), 409)
-        self.assertEqual((self.repo / POST_PATH).read_text(), POST)
+        self.assertEqual((self.repo / POST_PATH).read_text(encoding="utf-8"), POST)
 
     def test_external_source_change_cannot_be_overwritten(self):
         d = self.update(self.open(), body="편집기 변경")
@@ -165,7 +165,7 @@ class PreservationTests(RepositoryCase):
         self.write(POST_PATH, external)
         self.assertTrue(self.studio.check(d["id"])["errors"])
         self.assert_studio_error(lambda: self.publish(d), 409)
-        self.assertEqual((self.repo / POST_PATH).read_text(), external)
+        self.assertEqual((self.repo / POST_PATH).read_text(encoding="utf-8"), external)
 
     def test_restore_keeps_new_source_revision_after_publish(self):
         d = self.open()
@@ -182,7 +182,7 @@ class PreservationTests(RepositoryCase):
         d = self.open()
         self.studio.delete_draft(d["id"])
         self.assert_studio_error(lambda: self.studio.get_draft(d["id"]), 404)
-        self.assertEqual((self.repo / POST_PATH).read_text(), POST)
+        self.assertEqual((self.repo / POST_PATH).read_text(encoding="utf-8"), POST)
         self.assertTrue((self.repo / ".blog-studio/history" / d["id"]).is_dir())
 
     def test_new_draft_collision_and_future_date_are_blocked(self):
@@ -198,7 +198,7 @@ class PreservationTests(RepositoryCase):
         self.assertFalse(d["published"])
         self.assertEqual(d["category"], "ai/llm")
         self.assertEqual(server.split_post(self.studio.export(d["id"]))[0]["custom"], {"nested": ["one", "two"], "enabled": True})
-        self.assertEqual((self.repo / POST_PATH).read_text(), POST)
+        self.assertEqual((self.repo / POST_PATH).read_text(encoding="utf-8"), POST)
 
     def test_existing_relative_image_is_not_reported_missing(self):
         report = self.studio.check(self.open()["id"])
@@ -259,7 +259,7 @@ class ImagesAndBoundariesTests(RepositoryCase):
 
     def test_symlink_source_and_upload_parent_are_rejected(self):
         outside = Path(self.temp.name) / "outside.md"
-        outside.write_text(POST)
+        outside.write_bytes(POST.encode("utf-8"))
         (self.repo / "_posts/linked.md").symlink_to(outside)
         self.assert_studio_error(lambda: self.studio.open_post("_posts/linked.md"), 403)
         d = self.open()
@@ -283,7 +283,7 @@ class GitPublicationTests(RepositoryCase):
         self.assertTrue(result["commit"])
         self.assertFalse(result["pushed"])
         self.assertEqual(self.git("diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD"), POST_PATH)
-        self.assertEqual((self.repo / "unrelated.txt").read_text(), "unrelated local changes\n")
+        self.assertEqual((self.repo / "unrelated.txt").read_text(encoding="utf-8"), "unrelated local changes\n")
         self.assertEqual(self.git("diff", "--cached", "--name-only"), "")
         self.assertIn("unrelated.txt", self.git("status", "--porcelain"))
 
@@ -294,7 +294,7 @@ class GitPublicationTests(RepositoryCase):
         head = self.git("rev-parse", "HEAD")
         index = self.git("diff", "--cached")
         self.assert_studio_error(lambda: self.publish(d, "commit"), 409)
-        self.assertEqual((self.repo / POST_PATH).read_text(), POST)
+        self.assertEqual((self.repo / POST_PATH).read_text(encoding="utf-8"), POST)
         self.assertEqual(self.git("rev-parse", "HEAD"), head)
         self.assertEqual(self.git("diff", "--cached"), index)
 
@@ -305,13 +305,13 @@ class GitPublicationTests(RepositoryCase):
         d = self.update(self.open(), body="파일만 저장")
         self.publish(d, "save")
         self.assertEqual(self.git("diff", "--cached"), staged)
-        self.assertIn("파일만 저장", (self.repo / POST_PATH).read_text())
+        self.assertIn("파일만 저장", (self.repo / POST_PATH).read_text(encoding="utf-8"))
 
     def test_commit_failure_rolls_back_post_and_retains_draft(self):
         d = self.update(self.open(), body="보존할 초안")
         with patch.object(self.studio, "_commit", side_effect=server.StudioError("Simulated git failure", 409)):
             self.assert_studio_error(lambda: self.publish(d, "commit"), 409)
-        self.assertEqual((self.repo / POST_PATH).read_text(), POST)
+        self.assertEqual((self.repo / POST_PATH).read_text(encoding="utf-8"), POST)
         self.assertEqual(self.studio.get_draft(d["id"])["body"], "보존할 초안")
 
     def test_staging_after_review_is_rechecked_under_index_lock(self):
@@ -326,15 +326,15 @@ class GitPublicationTests(RepositoryCase):
             self.assert_studio_error(lambda: self.publish(d, "commit"), 409)
         self.assertEqual(self.git("rev-parse", "HEAD"), head)
         self.assertEqual(self.git("diff", "--cached", "--name-only"), "unrelated.txt")
-        self.assertEqual((self.repo / POST_PATH).read_text(), POST)
+        self.assertEqual((self.repo / POST_PATH).read_text(encoding="utf-8"), POST)
 
     def test_existing_git_lock_is_not_removed_or_ignored(self):
         d = self.update(self.open(), body="동시 Git 작업")
         lock = self.repo / ".git/index.lock"
-        lock.write_text("another process owns this lock")
+        lock.write_text("another process owns this lock", encoding="utf-8")
         self.assert_studio_error(lambda: self.publish(d, "commit"), 409)
-        self.assertEqual(lock.read_text(), "another process owns this lock")
-        self.assertEqual((self.repo / POST_PATH).read_text(), POST)
+        self.assertEqual(lock.read_text(encoding="utf-8"), "another process owns this lock")
+        self.assertEqual((self.repo / POST_PATH).read_text(encoding="utf-8"), POST)
 
     def test_index_install_failure_preserves_already_committed_content(self):
         d = self.update(self.open(), body="커밋 완료 후 인덱스 실패")
@@ -349,7 +349,7 @@ class GitPublicationTests(RepositoryCase):
         self.assertNotEqual(self.git("rev-parse", "HEAD"), head)
         committed = self.git("show", "HEAD:" + POST_PATH)
         self.assertIn("커밋 완료 후 인덱스 실패", committed)
-        self.assertEqual((self.repo / POST_PATH).read_text().strip(), committed)
+        self.assertEqual((self.repo / POST_PATH).read_text(encoding="utf-8").strip(), committed)
 
     def setup_remote(self):
         self.remote = Path(self.temp.name) / "remote.git"
@@ -364,7 +364,7 @@ class GitPublicationTests(RepositoryCase):
         self.assertTrue(result["pushed"])
         self.assertIsNone(result["push_error"])
         head = self.git("rev-parse", "HEAD")
-        remote_head = subprocess.run(["git", "--git-dir", str(self.remote), "rev-parse", "main"], check=True, capture_output=True, text=True).stdout.strip()
+        remote_head = subprocess.run(["git", "--git-dir", str(self.remote), "rev-parse", "main"], check=True, capture_output=True, text=True, encoding="utf-8").stdout.strip()
         self.assertEqual(head, remote_head)
 
     def test_unrelated_unpushed_commit_blocks_push(self):
@@ -374,19 +374,19 @@ class GitPublicationTests(RepositoryCase):
         self.git("commit", "-m", "Unrelated unpublished work")
         d = self.update(self.open(), body="블로그 초안")
         self.assert_studio_error(lambda: self.publish(d, "push"), 409)
-        self.assertEqual((self.repo / POST_PATH).read_text(), POST)
+        self.assertEqual((self.repo / POST_PATH).read_text(encoding="utf-8"), POST)
 
     def test_rejected_push_keeps_local_commit_and_retry_succeeds(self):
         self.setup_remote()
         hook = self.remote / "hooks/pre-receive"
-        hook.write_text("#!/bin/sh\nexit 1\n")
+        hook.write_bytes(b"#!/bin/sh\nexit 1\n")
         hook.chmod(0o755)
         d = self.update(self.open(), body="실패해도 남을 내용")
         result = self.publish(d, "push")
         self.assertFalse(result["pushed"])
         self.assertTrue(result["push_error"])
         self.assertEqual(self.git("rev-parse", "HEAD"), result["commit"])
-        self.assertIn("실패해도 남을 내용", (self.repo / POST_PATH).read_text())
+        self.assertIn("실패해도 남을 내용", (self.repo / POST_PATH).read_text(encoding="utf-8"))
         hook.unlink()
         retry = self.publish(result["draft"], "push")
         self.assertTrue(retry["pushed"])
@@ -420,13 +420,13 @@ class GitPublicationTests(RepositoryCase):
             subprocess.run(["git", "-C", str(other), *args], check=True, capture_output=True)
         other_git("config", "user.name", "Other writer")
         other_git("config", "user.email", "other@example.invalid")
-        (other / "remote-only.txt").write_text("remote work")
+        (other / "remote-only.txt").write_text("remote work", encoding="utf-8")
         other_git("add", "remote-only.txt")
         other_git("commit", "-m", "Remote change")
         other_git("push", "origin", "main")
         d = self.update(self.open(), body="동기화 전 초안")
         self.assert_studio_error(lambda: self.publish(d, "push"), 409)
-        self.assertEqual((self.repo / POST_PATH).read_text(), POST)
+        self.assertEqual((self.repo / POST_PATH).read_text(encoding="utf-8"), POST)
 
 
 class HTTPBoundaryTests(RepositoryCase):
