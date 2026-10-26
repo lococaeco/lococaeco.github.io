@@ -85,6 +85,10 @@ def main():
                    LOCALAPPDATA=str(work / 'local'), APPDATA=str(work / 'roaming'))
         # Check the actual frozen Tcl/Tk runtime without opening the real repository.
         subprocess.run([str(binary), '--check-gui'], cwd=work, env=env, check=True, timeout=30)
+        # Construct and close the full launcher too: fonts, styles and widgets
+        # must work in the shipped Windows/Linux application, not only a blank Tk.
+        subprocess.run([str(binary), '--repo', str(repo), '--no-browser', '--exit-after', '1.5'],
+                       cwd=work, env=env, check=True, timeout=30)
         process, url = start(binary, repo, work, env, 1)
         try:
             state = request(url, '/api/bootstrap')

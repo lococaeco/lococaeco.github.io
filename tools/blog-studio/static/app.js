@@ -2,7 +2,8 @@
 
 (() => {
   const $ = id => document.getElementById(id);
-  const state = { bootstrap: null, token: '', draft: null, editor: null, originalBody: '', baseline: '', loading: false, dirty: false, revision: 0, saving: null, saveTimer: null, view: 'all', query: '', focus: false, settings: window.innerWidth > 1020, recovery: null, uploads: 0, busy: false, deletingId: null, check: null, reviewSequence: 0, renderTimer: null, storageWarned: false };
+  const state = { bootstrap: null, token: '', draft: null, editor: null, originalBody: '', baseline: '', loading: false, dirty: false, revision: 0, saving: null, saveTimer: null, view: 'all', query: '', focus: false, settings: false, recovery: null, uploads: 0, busy: false, deletingId: null, check: null, reviewSequence: 0, renderTimer: null, storageWarned: false };
+  const compactSidebar = window.matchMedia('(max-width: 900px)');
   const fieldIds = ['title', 'excerpt', 'category', 'tags', 'post-date', 'slug', 'teaser', 'toc', 'mathjax', 'comments', 'feature', 'published'];
   const flags = ['toc', 'mathjax', 'comments', 'feature', 'published'];
 
@@ -26,6 +27,8 @@
   function setStatus(message, type = '') {
     $('save-status').className = 'save-status ' + type;
     $('save-status').replaceChildren(textElement('span', '', 'status-dot'), document.createTextNode(message));
+    $('settings-save-status').className = 'settings-save-status ' + type;
+    $('settings-save-status').textContent = message;
   }
 
   async function api(path, method = 'GET', body) {
@@ -231,6 +234,57 @@
     }
     if (!items.length) fragment.append(textElement('div', query ? '검색 결과가 없어요.' : state.view === 'drafts' ? '아직 작성 중인 글이 없어요.\n새 글로 이야기를 시작해 보세요.' : '아직 글이 없어요.', 'empty-list'));
     $('post-list').replaceChildren(fragment);
+    renderHome();
+  }
+
+  function renderHome() {
+    const data = state.bootstrap;
+    if (!data) return;
+    $('home-draft-count').textContent = String(data.drafts.length);
+    const recent = [...data.drafts].sort((a, b) => String(b.updated_at).localeCompare(String(a.updated_at))).slice(0, 3);
+    const cards = recent.map(draft => {
+      const card = textElement('button', '', 'draft-card');
+      card.append(textElement('span', draft.source_path ? '수정 중' : '임시저장', 'draft-card-tag'), textElement('strong', draft.title || '제목 없는 글'), textElement('small', formatDate(draft.updated_at) + ' 저장'));
+      card.onclick = act(async () => {
+        if (state.busy) return;
+        state.view = 'drafts';
+        await openDraft('/api/drafts/' + encodeURIComponent(draft.id));
+      });
+      return card;
+    });
+    if (!cards.length) cards.push(textElement('div', '아직 작성 중인 글이 없어요. 새 글을 시작하면 이곳에서 다시 이어 쓸 수 있습니다.', 'home-empty'));
+    $('recent-drafts').replaceChildren(...cards);
+    $('home-templates').replaceChildren(...data.templates.filter(template => template.body).slice(0, 3).map((template, index) => {
+      const card = textElement('button', '', 'template-card');
+      const icon = textElement('span', ['Aa', '</>', '✎'][index], 'template-icon');
+      icon.setAttribute('aria-hidden', 'true');
+      const label = textElement('span', '');
+      label.append(textElement('strong', template.label), textElement('small', template.description || '템플릿으로 시작하기'));
+      card.append(icon, label);
+      card.onclick = act(() => newDraft(template));
+      return card;
+    }));
+  }
+
+  async function goHome() {
+    if (state.busy) return;
+    if (state.uploads) throw new Error('이미지 업로드가 끝나면 홈으로 이동해 주세요.');
+    setBusy(true);
+    try {
+      await saveDraft();
+      state.draft = null;
+      state.settings = false;
+      $('document').hidden = true;
+      $('welcome').hidden = false;
+      $('publish-button').disabled = true;
+      $('document-label').textContent = '내 작업 공간';
+      document.title = 'Blog Studio';
+      updateSettings();
+      renderList();
+      closeSidebar();
+      setStatus('준비 완료');
+      window.scrollTo({ top: 0 });
+    } finally { setBusy(false); }
   }
 
   async function openDraft(path) {
@@ -323,7 +377,7 @@
   function createEditor() {
     if (!window.toastui?.Editor) throw new Error('편집기를 불러오지 못했어요. vendor 파일이 준비되어 있는지 확인해 주세요.');
     state.editor = new toastui.Editor({
-      el: $('editor'), height: 'auto', minHeight: '430px', initialEditType: 'wysiwyg', previewStyle: 'vertical', hideModeSwitch: true, usageStatistics: false, language: 'ko-KR', placeholder: '여기에 첫 문장을 적어보세요. 이미지를 붙여넣을 수도 있어요.', autofocus: false,
+      el: $('editor'), height: 'auto', minHeight: '430px', initialEditType: 'wysiwyg', previewStyle: $('editor').clientWidth < 800 ? 'tab' : 'vertical', hideModeSwitch: true, usageStatistics: false, language: 'ko-KR', placeholder: '여기에 첫 문장을 적어보세요. 이미지를 붙여넣을 수도 있어요.', autofocus: false,
       linkAttributes: { target: '_blank', rel: 'noopener noreferrer' },
       customHTMLSanitizer: html => window.DOMPurify ? window.DOMPurify.sanitize(html, { USE_PROFILES: { html: true } }) : '',
       toolbarItems: [['heading', 'bold', 'italic', 'strike'], ['hr', 'quote'], ['ul', 'ol', 'task'], ['table', 'link', 'image'], ['code', 'codeblock']],
@@ -340,6 +394,13 @@
       if (records.some(record => record.type === 'childList' && [...record.addedNodes].some(node => node.nodeType === Node.ELEMENT_NODE))) queueRenderImages();
     });
     observer.observe($('editor'), { childList: true, subtree: true });
+    let previewStyle = $('editor').clientWidth < 800 ? 'tab' : 'vertical';
+    new ResizeObserver(entries => {
+      const width = entries[0]?.contentRect.width;
+      if (!width) return;
+      const next = width < 800 ? 'tab' : 'vertical';
+      if (next !== previewStyle) { state.editor.changePreviewStyle(next); previewStyle = next; }
+    }).observe($('editor'));
     installClipboardImageHandlers();
   }
 
@@ -417,7 +478,7 @@
     const title = $('title').value.trim() || '제목 없는 글';
     $('document-label').textContent = title;
     document.title = title + ' · Blog Studio';
-    $('document-kind').textContent = state.draft.source_path ? 'EDITING' : 'DRAFT';
+    $('document-kind').textContent = state.draft.source_path ? '기존 글 수정' : '임시저장 초안';
     $('document-category').textContent = $('category').selectedOptions[0]?.textContent || '나의 이야기';
     const body = currentBody();
     const chars = body.replace(/\s/g, '').length;
@@ -482,10 +543,42 @@
   }
 
   function updateSettings() {
-    $('metadata-panel').hidden = !state.draft || !state.settings;
-    $('metadata-button').setAttribute('aria-expanded', String(!!state.draft && state.settings));
+    const panel = $('metadata-panel');
+    const open = !!state.draft && state.settings;
+    panel.hidden = false;
+    if (open && !panel.open) panel.showModal();
+    else if (!open && panel.open) panel.close();
+    $('metadata-button').disabled = !state.draft;
+    $('metadata-button').setAttribute('aria-expanded', String(open));
   }
-  function closeSidebar() { $('sidebar').classList.remove('open'); $('menu-toggle').setAttribute('aria-expanded', 'false'); }
+  function syncSidebar() {
+    const sidebar = $('sidebar');
+    const open = compactSidebar.matches && sidebar.classList.contains('open');
+    sidebar.inert = compactSidebar.matches && !open;
+    sidebar.setAttribute('aria-hidden', String(sidebar.inert));
+    $('menu-toggle').setAttribute('aria-expanded', String(open));
+    $('sidebar-backdrop').hidden = !open;
+    document.querySelector('.workspace').inert = open;
+    if (open) { sidebar.setAttribute('role', 'dialog'); sidebar.setAttribute('aria-modal', 'true'); }
+    else { sidebar.removeAttribute('role'); sidebar.removeAttribute('aria-modal'); }
+  }
+  function closeSidebar(restoreFocus = true) {
+    const wasOpen = $('sidebar').classList.contains('open');
+    $('sidebar').classList.remove('open');
+    syncSidebar();
+    if (wasOpen && restoreFocus && compactSidebar.matches) $('menu-toggle').focus();
+  }
+  function openSidebar() {
+    if (!compactSidebar.matches) return;
+    if (state.focus) {
+      state.focus = false;
+      $('app').classList.remove('focus-mode');
+      $('focus-button').setAttribute('aria-pressed', 'false');
+    }
+    $('sidebar').classList.add('open');
+    syncSidebar();
+    $('new-post').focus();
+  }
 
   function showDialog(id) {
     const dialog = $(id);
@@ -713,9 +806,9 @@
       state.bootstrap.drafts = state.bootstrap.drafts.filter(draft => draft.id !== id);
       if (isActive) {
         state.loading = true; state.draft = null; state.dirty = false; state.recovery = null;
-        $('document').hidden = true; $('metadata-panel').hidden = true; $('welcome').hidden = false; $('publish-button').disabled = true;
+        $('document').hidden = true; state.settings = false; updateSettings(); $('welcome').hidden = false; $('publish-button').disabled = true;
         $('recovery-banner').hidden = true;
-        $('document-label').textContent = '새로운 생각을 담아보세요'; document.title = 'Blog Studio';
+        $('document-label').textContent = '내 작업 공간'; document.title = 'Blog Studio';
         state.loading = false; setStatus('준비 완료');
       }
       try {
@@ -731,13 +824,20 @@
     $('mathjax').addEventListener('change', queueRenderImages);
     $('new-post').onclick = act(() => newDraft());
     $('welcome-new').onclick = act(() => newDraft());
+    $('welcome-import').onclick = () => $('import-file').click();
+    $('home-button').onclick = act(async event => { event.preventDefault(); await goHome(); });
+    $('home-drafts').onclick = () => { state.view = 'drafts'; renderList(); if (compactSidebar.matches) openSidebar(); else $('post-list').querySelector('button')?.focus(); };
     $('search').oninput = event => { state.query = event.target.value; renderList(); };
     for (const button of document.querySelectorAll('[data-view]')) button.onclick = () => { state.view = button.dataset.view; renderList(); };
     $('refresh').onclick = act(async () => { await refreshBootstrap(); notify('글 목록을 새로 불러왔어요.'); });
-    $('menu-toggle').onclick = () => { const open = $('sidebar').classList.toggle('open'); $('menu-toggle').setAttribute('aria-expanded', String(open)); };
-    document.addEventListener('click', event => { if (window.innerWidth <= 760 && !$('sidebar').contains(event.target) && !$('menu-toggle').contains(event.target)) closeSidebar(); });
+    $('menu-toggle').onclick = () => { if ($('sidebar').classList.contains('open')) closeSidebar(); else openSidebar(); };
+    $('sidebar-backdrop').onclick = () => closeSidebar();
+    compactSidebar.addEventListener('change', () => closeSidebar(false));
+    syncSidebar();
     $('metadata-button').onclick = () => { state.settings = !state.settings; updateSettings(); };
     $('metadata-close').onclick = () => { state.settings = false; updateSettings(); };
+    $('metadata-panel').addEventListener('close', () => { state.settings = false; $('metadata-button').setAttribute('aria-expanded', 'false'); });
+    $('metadata-panel').addEventListener('click', event => { if (event.target === $('metadata-panel')) { const rect = event.target.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) { state.settings = false; updateSettings(); } } });
     $('focus-button').onclick = () => { state.focus = !state.focus; $('app').classList.toggle('focus-mode', state.focus); $('focus-button').setAttribute('aria-pressed', String(state.focus)); };
     $('mode-visual').onclick = act(() => changeMode('wysiwyg'));
     $('mode-markdown').onclick = act(() => changeMode('markdown'));
@@ -775,11 +875,20 @@
     document.addEventListener('keydown', event => {
       const modifier = event.ctrlKey || event.metaKey;
       if (modifier && event.key.toLowerCase() === 's') { event.preventDefault(); saveDraft(true).catch(() => {}); }
-      if (modifier && event.shiftKey && event.key.toLowerCase() === 'f') { event.preventDefault(); $('focus-button').click(); }
       if (document.querySelector('dialog[open]')) return;
+      if (modifier && event.shiftKey && event.key.toLowerCase() === 'f') { event.preventDefault(); $('focus-button').click(); }
+      if (compactSidebar.matches && $('sidebar').classList.contains('open')) {
+        if (event.key === 'Escape') { event.preventDefault(); closeSidebar(); return; }
+        if (event.key === 'Tab') {
+          const controls = [...$('sidebar').querySelectorAll('a[href],button:not(:disabled),input:not(:disabled)')].filter(node => node.getClientRects().length && !node.hidden);
+          const first = controls[0], last = controls[controls.length - 1];
+          if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+          else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+        }
+      }
       const editing = event.target.closest('input,textarea,select,[contenteditable="true"]');
       if (!editing && !modifier && !event.altKey) {
-        if (event.key === '/') { event.preventDefault(); if (window.innerWidth <= 760) $('menu-toggle').click(); $('search').focus(); }
+        if (event.key === '/') { event.preventDefault(); if (compactSidebar.matches) openSidebar(); $('search').focus(); }
         if (event.key.toLowerCase() === 'n') { event.preventDefault(); newDraft().catch(error => notify(error.message, true)); }
       }
     });

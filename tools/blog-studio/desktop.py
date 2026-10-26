@@ -329,7 +329,7 @@ def check_gui():
 class DesktopWindow:
     def __init__(self, window, args, log_path):
         import tkinter as tk
-        from tkinter import filedialog, messagebox, ttk
+        from tkinter import filedialog, font, messagebox, ttk
         self.window, self.args, self.log_path = window, args, log_path
         self.filedialog, self.messagebox = filedialog, messagebox
         self.process = StudioProcess()
@@ -339,11 +339,26 @@ class DesktopWindow:
         self.preferences = load_preferences()
         repo = args.repo or discover_repository(self.preferences)
         self.repo = tk.StringVar(value=str(repo) if repo else '')
-        self.status = tk.StringVar(value='블로그 폴더를 확인한 뒤 작성을 시작하세요.')
+        self.status = tk.StringVar(value='폴더를 선택하고 작성 시작을 눌러 주세요.')
+        self.phase = tk.StringVar(value='준비됨')
         self.address = tk.StringVar(value='')
+        self.colors = {
+            'paper': '#F5F4F0', 'surface': '#FFFFFF', 'ink': '#202826',
+            'muted': '#66716C', 'line': '#DDE3DE', 'teal': '#187B71',
+            'teal_dark': '#116358', 'tint': '#E7F2EF', 'error': '#A3433E',
+        }
+        c = self.colors
+        families = set(font.families(window))
+        preferred_fonts = ('Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo',
+                           'Noto Sans CJK KR', 'Noto Sans KR', 'NanumGothic')
+        family = next((name for name in preferred_fonts if name in families),
+                      font.nametofont('TkDefaultFont').actual('family'))
+        self.font_family = family
+        regular, small, bold = (family, 11), (family, 10), (family, 11, 'bold')
         window.title('Blog Studio')
-        window.geometry('660x390')
-        window.minsize(560, 380)
+        window.geometry('860x640')
+        window.minsize(740, 620)
+        window.configure(background=c['paper'])
         bundle = Path(getattr(sys, '_MEIPASS', Path(__file__).resolve().parent))
         for icon_path in (bundle / 'icon.png', Path(__file__).resolve().parent / 'packaging' / 'icon.png'):
             if icon_path.is_file():
@@ -354,35 +369,171 @@ class DesktopWindow:
                     LOGGER.warning('Could not load desktop icon')
                 break
         window.protocol('WM_DELETE_WINDOW', self.close)
-        frame = ttk.Frame(window, padding=24)
+
+        # Clam honors application colors on Windows and Linux, while keeping
+        # native keyboard traversal, button activation and editable text fields.
+        style = ttk.Style(window)
+        if 'clam' in style.theme_names():
+            style.theme_use('clam')
+        style.configure('Studio.TEntry', font=regular, padding=(12, 12),
+                        foreground=c['ink'], fieldbackground=c['paper'],
+                        bordercolor=c['line'], lightcolor=c['line'], darkcolor=c['line'],
+                        insertcolor=c['teal'], borderwidth=1)
+        style.map('Studio.TEntry', bordercolor=[('focus', c['teal'])],
+                  lightcolor=[('focus', c['teal'])], darkcolor=[('focus', c['teal'])],
+                  fieldbackground=[('disabled', '#F0F1ED')],
+                  foreground=[('disabled', c['muted'])])
+        style.configure('Studio.TButton', font=bold, padding=(16, 11),
+                        background=c['surface'], foreground=c['ink'],
+                        bordercolor=c['line'], lightcolor=c['surface'], darkcolor=c['surface'],
+                        focuscolor=c['teal'], focusthickness=2, borderwidth=1)
+        style.map('Studio.TButton', background=[('disabled', c['paper']), ('pressed', c['tint']), ('active', c['tint'])],
+                  foreground=[('disabled', '#8B948E')], bordercolor=[('focus', c['teal'])])
+        style.configure('Primary.Studio.TButton', padding=(24, 13),
+                        background=c['teal'], foreground=c['surface'], bordercolor=c['teal'],
+                        lightcolor=c['teal'], darkcolor=c['teal'], focuscolor='#B9E6DA')
+        style.map('Primary.Studio.TButton',
+                  background=[('disabled', '#D4E3DE'), ('pressed', c['teal_dark']), ('active', c['teal_dark'])],
+                  foreground=[('disabled', '#42665E')],
+                  bordercolor=[('disabled', '#D4E3DE'), ('focus', c['teal_dark'])],
+                  lightcolor=[('disabled', '#D4E3DE'), ('pressed', c['teal_dark']), ('active', c['teal_dark'])],
+                  darkcolor=[('disabled', '#D4E3DE'), ('pressed', c['teal_dark']), ('active', c['teal_dark'])])
+        style.configure('Quiet.Studio.TButton', font=small, padding=(12, 7),
+                        background=c['paper'], foreground=c['muted'],
+                        bordercolor=c['paper'], lightcolor=c['paper'], darkcolor=c['paper'])
+        style.map('Quiet.Studio.TButton', bordercolor=[('focus', c['teal'])])
+
+        frame = tk.Frame(window, background=c['paper'], padx=36, pady=24)
         frame.pack(fill='both', expand=True)
-        ttk.Label(frame, text='Blog Studio', font=('TkDefaultFont', 23, 'bold')).pack(anchor='w')
-        ttk.Label(frame, text='설치 없이, 내 블로그 폴더에서 바로 글쓰기').pack(anchor='w', pady=(7, 23))
-        ttk.Label(frame, text='블로그 폴더').pack(anchor='w')
-        folder = ttk.Frame(frame)
-        folder.pack(fill='x', pady=(7, 7))
-        self.entry = ttk.Entry(folder, textvariable=self.repo)
-        self.entry.pack(side='left', fill='x', expand=True)
-        self.choose_button = ttk.Button(folder, text='폴더 선택', command=self.choose)
-        self.choose_button.pack(side='right', padx=(9, 0))
-        ttk.Label(frame, text='_config.yml과 _posts가 있는 폴더 · Git 없이도 파일 편집 가능').pack(anchor='w')
-        ttk.Separator(frame).pack(fill='x', pady=21)
-        self.status_label = ttk.Label(frame, textvariable=self.status, wraplength=580)
-        self.status_label.pack(anchor='w')
-        self.address_label = ttk.Label(frame, textvariable=self.address, foreground='#3464e0')
-        self.address_label.pack(anchor='w', pady=(7, 17))
-        buttons = ttk.Frame(frame)
-        buttons.pack(fill='x')
-        self.start_button = ttk.Button(buttons, text='작성 시작', command=self.start)
-        self.start_button.pack(side='left')
-        self.browser_button = ttk.Button(buttons, text='브라우저 열기', command=self.browse, state='disabled')
-        self.browser_button.pack(side='left', padx=8)
-        self.quit_button = ttk.Button(buttons, text='종료', command=self.close)
-        self.quit_button.pack(side='right')
+        frame.columnconfigure(0, weight=1)
+        frame.rowconfigure(3, weight=1)
+        brand = tk.Frame(frame, background=c['paper'])
+        brand.grid(row=0, column=0, sticky='ew')
+        logo = tk.Canvas(brand, width=36, height=36, background=c['paper'],
+                         highlightthickness=0, takefocus=False)
+        logo.pack(side='left')
+        logo.create_polygon(9, 1, 27, 1, 35, 1, 35, 9, 35, 27, 35, 35,
+                            27, 35, 4, 35, 1, 35, 1, 32, 1, 9, 1, 1,
+                            smooth=True, fill=c['teal'], outline=c['teal'])
+        mark_family = next((name for name in ('Georgia', 'Liberation Serif', 'DejaVu Serif')
+                            if name in families), 'Times')
+        logo.create_text(18, 16, text='b.', font=(mark_family, -32, 'bold'), fill='white')
+        tk.Label(brand, text='Blog Studio', font=(family, 14, 'bold'),
+                 background=c['paper'], foreground=c['ink']).pack(side='left', padx=(12, 0))
+        tk.Label(brand, text='내 컴퓨터의 글쓰기 공간', font=small,
+                 background=c['paper'], foreground=c['muted']).pack(side='right')
+
+        heading = tk.Frame(frame, background=c['paper'])
+        heading.grid(row=1, column=0, sticky='ew', pady=(24, 20))
+        tk.Label(heading, text='오늘의 글을 시작하세요', font=(family, 27, 'bold'),
+                 background=c['paper'], foreground=c['ink'], anchor='w').pack(fill='x')
+        self.intro_label = tk.Label(heading, text='블로그 폴더를 연결하면 브라우저에서 편집기가 열립니다.',
+                                   font=regular, background=c['paper'], foreground=c['muted'],
+                                   anchor='w', justify='left')
+        self.intro_label.pack(fill='x', pady=(9, 0))
+
+        card = tk.Frame(frame, background=c['surface'], highlightbackground=c['line'],
+                        highlightcolor=c['line'], highlightthickness=1, padx=24, pady=20)
+        card.grid(row=2, column=0, sticky='ew')
+        card.columnconfigure(0, weight=1)
+        tk.Label(card, text='블로그 폴더', font=(family, 12, 'bold'),
+                 background=c['surface'], foreground=c['ink']).grid(row=0, column=0, sticky='w')
+        folder = tk.Frame(card, background=c['surface'])
+        folder.grid(row=1, column=0, sticky='ew', pady=(13, 12))
+        folder.columnconfigure(0, weight=1)
+        self.entry = ttk.Entry(folder, textvariable=self.repo, style='Studio.TEntry',
+                               font=regular, width=1)
+        self.entry.grid(row=0, column=0, sticky='ew')
+        self.choose_button = ttk.Button(folder, text='폴더 선택', command=self.choose,
+                                        style='Studio.TButton', takefocus=True)
+        self.choose_button.grid(row=0, column=1, padx=(10, 0))
+        self.folder_hint = tk.Label(card, text='글과 초안이 저장된 블로그 폴더를 선택하세요.', font=small,
+                                    background=c['surface'], foreground=c['muted'], anchor='w', justify='left')
+        self.folder_hint.grid(row=2, column=0, sticky='ew')
+        action = tk.Frame(card, background=c['surface'])
+        action.grid(row=3, column=0, sticky='ew', pady=(20, 0))
+        action.columnconfigure(0, weight=1)
+        self.remember_label = tk.Label(action, text='선택한 폴더는 다음에도 기억해요.', font=small,
+                                      background=c['surface'], foreground=c['muted'], anchor='w', justify='left')
+        self.remember_label.grid(row=0, column=0, sticky='w', padx=(0, 16))
+        self.start_button = ttk.Button(action, text='작성 시작', command=self.start,
+                                       style='Primary.Studio.TButton', width=15, takefocus=True)
+        self.start_button.grid(row=0, column=1)
+        self.browser_button = ttk.Button(action, text='편집기로 돌아가기', command=self.browse,
+                                         style='Primary.Studio.TButton', width=15,
+                                         state='disabled', takefocus=True)
+        self.browser_button.grid(row=0, column=1)
+        self.browser_button.grid_remove()
+
+        # The status area keeps its space as readiness, errors and URL change.
+        status_height = font.Font(font=bold).metrics('linespace') + 2 * font.Font(font=small).metrics('linespace') + 16
+        status_area = tk.Frame(frame, background=c['paper'], height=max(84, status_height))
+        status_area.grid(row=4, column=0, sticky='ew', pady=(15, 8))
+        status_area.grid_propagate(False)
+        status_area.columnconfigure(1, weight=1)
+        self.status_dot = tk.Canvas(status_area, width=12, height=20, background=c['paper'],
+                                    highlightthickness=0, takefocus=False)
+        self.status_dot.grid(row=0, column=0, sticky='w', padx=(0, 8))
+        self.dot_id = self.status_dot.create_oval(3, 7, 9, 13, fill=c['teal'], outline='')
+        self.phase_label = tk.Label(status_area, textvariable=self.phase, font=bold,
+                                    background=c['paper'], foreground=c['ink'], anchor='w')
+        self.phase_label.grid(row=0, column=1, sticky='ew')
+        self.status_label = tk.Label(status_area, textvariable=self.status, font=small,
+                                     background=c['paper'], foreground=c['muted'],
+                                     anchor='w', justify='left')
+        self.status_label.grid(row=1, column=1, sticky='ew', pady=(3, 0))
+        self.address_label = tk.Label(status_area, textvariable=self.address, font=small,
+                                      background=c['paper'], foreground=c['teal'], anchor='w')
+        self.address_label.grid(row=2, column=1, sticky='ew', pady=(3, 0))
+        footer = tk.Frame(frame, background=c['paper'])
+        footer.grid(row=5, column=0, sticky='ew')
+        footer.columnconfigure(0, weight=1)
+        tk.Frame(footer, height=1, background=c['line']).grid(row=0, column=0, columnspan=2, sticky='ew', pady=(0, 10))
+        tk.Label(footer, text='내 글은 내 폴더에, 안전하게.', font=small,
+                 background=c['paper'], foreground=c['muted']).grid(row=1, column=0, sticky='w')
+        self.quit_button = ttk.Button(footer, text='종료', command=self.close,
+                                      style='Quiet.Studio.TButton', takefocus=True)
+        self.quit_button.grid(row=1, column=1, sticky='e')
+
+        def resize(event):
+            available = max(200, event.width - 72)
+            self.intro_label.configure(wraplength=available)
+            self.status_label.configure(wraplength=available - 24)
+            self.folder_hint.configure(wraplength=available - 52)
+            self.remember_label.configure(wraplength=max(160, available - 320))
+        frame.bind('<Configure>', resize)
+        window.bind('<Control-o>', lambda event: self.choose_shortcut())
+        window.bind('<Return>', self.activate_focused)
+        window.after_idle(self.entry.focus_set if not repo else self.start_button.focus_set)
+        # Point-sized Korean fonts grow under Windows display scaling. Let the
+        # content request enough room instead of clipping it in a fixed canvas.
+        window.update_idletasks()
+        required_height = max(620, frame.winfo_reqheight())
+        window.minsize(740, required_height)
+        window.geometry(f"{max(860, frame.winfo_reqwidth())}x{max(640, required_height)}")
         self.window.report_callback_exception = self.callback_error
         self.window.after(100, self.poll)
         if args.exit_after is not None:
             self.window.after(max(1, int(args.exit_after * 1000)), lambda: self.close(force=True))
+
+    def set_phase(self, label, message, error=False):
+        self.phase.set(label)
+        self.status.set(message)
+        self.status_dot.itemconfigure(self.dot_id, fill=self.colors['error' if error else 'teal'])
+
+    def choose_shortcut(self):
+        if not self.busy and self.process.server is None and not self.closing:
+            self.choose()
+        return 'break'
+
+    def activate_focused(self, event):
+        focused = self.window.focus_get()
+        buttons = (self.choose_button, self.start_button, self.browser_button, self.quit_button)
+        if focused in buttons:
+            focused.invoke()
+        elif focused == self.entry:
+            self.start()
+        return 'break'
 
     def callback_error(self, kind, value, traceback):
         LOGGER.error('Desktop callback error', exc_info=(kind, value, traceback))
@@ -392,6 +543,7 @@ class DesktopWindow:
         selected = self.filedialog.askdirectory(title='Jekyll 블로그 폴더 선택', initialdir=self.repo.get() or str(Path.home()), parent=self.window)
         if selected:
             self.repo.set(selected)
+            self.set_phase('준비됨', '폴더를 선택했어요. 작성 시작을 눌러 주세요.')
 
     def start(self):
         if self.busy or self.process.server is not None:
@@ -399,13 +551,15 @@ class DesktopWindow:
         try:
             repo = validate_repository(self.repo.get())
         except (LauncherError, OSError) as error:
+            self.set_phase('폴더를 확인해 주세요', '블로그가 저장된 폴더를 다시 선택해 주세요.', error=True)
             self.messagebox.showerror('블로그 폴더 확인', str(error), parent=self.window)
             return
         self.repo.set(str(repo))
         self.busy = True
         for widget in (self.entry, self.choose_button, self.start_button):
             widget.configure(state='disabled')
-        self.status.set('글쓰기 서버를 시작하고 있어요…')
+        self.set_phase('편집기 여는 중', '잠시만 기다려 주세요. 블로그 폴더를 연결하고 있어요.')
+        self.start_button.configure(text='시작하는 중…')
 
         def worker():
             try:
@@ -442,8 +596,12 @@ class DesktopWindow:
                 if event == 'started':
                     self.busy = False
                     self.address.set(self.process.url)
-                    self.status.set('실행 중 · 이 폴더의 글과 초안만 편집합니다.' + (' 사용 중인 포트를 피해 새 주소로 열었어요.' if self.process.port_changed else ''))
+                    self.set_phase('편집기 실행 중', '다른 앱이 사용 중인 포트를 피해 새 주소로 연결했어요.' if self.process.port_changed else '편집기를 사용하는 동안 이 창을 열어 두세요.')
+                    self.folder_hint.configure(text='연결한 폴더의 글과 초안을 편집합니다.')
+                    self.start_button.grid_remove()
                     self.browser_button.configure(state='normal')
+                    self.browser_button.grid()
+                    self.browser_button.focus_set()
                     if self.closing:
                         self.stop_async()
                     elif not self.args.no_browser:
@@ -455,20 +613,21 @@ class DesktopWindow:
                         return
                     for widget in (self.entry, self.choose_button, self.start_button):
                         widget.configure(state='normal')
-                    self.status.set('실행하지 못했어요. 폴더와 오류 내용을 확인해 주세요.')
+                    self.start_button.configure(text='작성 시작')
+                    self.set_phase('연결을 확인해 주세요', '실행하지 못했어요. 폴더와 오류 내용을 확인해 주세요.', error=True)
                     self.messagebox.showerror('Blog Studio 실행 오류', f'{value}\n\n로그: {self.log_path}', parent=self.window)
                 elif event == 'browser_error' and not self.closing:
                     self.messagebox.showwarning('브라우저 열기', value, parent=self.window)
         except queue.Empty:
             pass
         if self.process.server is not None and not self.process.running and not self.busy and not self.closing:
-            self.status.set('서버가 종료되었습니다. 앱을 다시 실행해 주세요.')
+            self.set_phase('편집기가 종료됨', '앱을 다시 실행해 주세요. 저장한 글은 블로그 폴더에 남아 있어요.', error=True)
             self.browser_button.configure(state='disabled')
         self.window.after(100, self.poll)
 
     def stop_async(self):
         self.busy = True
-        self.status.set('진행 중인 저장을 마친 뒤 종료하고 있어요…')
+        self.set_phase('종료하는 중', '진행 중인 저장을 마친 뒤 안전하게 종료하고 있어요…')
         self.browser_button.configure(state='disabled')
         self.quit_button.configure(state='disabled')
         def worker():
@@ -489,7 +648,7 @@ class DesktopWindow:
                 return
         self.closing = True
         if self.busy:
-            self.status.set('현재 작업이 끝나면 종료합니다…')
+            self.set_phase('종료 대기 중', '현재 작업이 끝나면 안전하게 종료합니다…')
             self.quit_button.configure(state='disabled')
         elif self.process.server is not None:
             self.stop_async()
